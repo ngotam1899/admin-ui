@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import PGActions from '../../redux/actions/personalityGroup'
 
 function List(props) {
-  //const [pgs, setPGs] = useState([]);
   const dispatch = useDispatch();
   const pgs = useSelector(state => (state.personalityGroup || []))
 
