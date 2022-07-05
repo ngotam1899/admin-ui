@@ -1,3 +1,7 @@
+/*
+ * Copyright © 2022 ICON Clinical Research Ltd.
+ * All rights reserved.
+ */
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useLocation } from 'react-router-dom'
@@ -16,7 +20,7 @@ import {
   CButton,
   CRow,
 } from '@coreui/react'
-import PGActions from '../../redux/actions/personalityGroup'
+import TestActions from '../../redux/actions/test'
 import Pagination from 'react-js-pagination'
 import getFilterParams from '../../util/getFilterParams'
 import qs from 'query-string'
@@ -29,8 +33,8 @@ function List(props) {
   const navigate = useNavigate()
   const location = useLocation()
   const dispatch = useDispatch()
-  const pgs = useSelector((state) => state.personalityGroup.list || [])
-  const total = useSelector((state) => state.personalityGroup.total || 0)
+  const tests = useSelector((state) => state.test.list || [])
+  const total = useSelector((state) => state.test.total || 0)
 
   useEffect(() => {
     loadData()
@@ -47,7 +51,7 @@ function List(props) {
       ...filters,
     }
     setFilter(params)
-    dispatch(PGActions.onGetList(params))
+    dispatch(TestActions.onGetList(params))
   }
 
   // phân trang
@@ -72,7 +76,7 @@ function List(props) {
           <CCardHeader>
             <div className="row">
               <div className="col-6">
-                <h5 className="my-2">List of Personality Group</h5>
+                <h5 className="my-2">List of Test</h5>
                 <p className="float-left my-2 mr-3 font-italic">
                   Có tất cả {total} kết quả tìm kiếm
                 </p>
@@ -91,7 +95,7 @@ function List(props) {
                   color="success"
                 >
                   {' '}
-                  Add a Personality Group
+                  Add a Test
                 </CButton>
               </div>
             </div>
@@ -100,9 +104,8 @@ function List(props) {
             <CTable responsive="xxl">
               <CTableHead>
                 <CTableRow>
-                  <CTableHeaderCell scope="col">Group ID</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Group Name</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Test Type</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Test ID</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Description</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
@@ -110,20 +113,19 @@ function List(props) {
                 {pgs.length > 0 &&
                   pgs.map((item) => {
                     return (
-                      <CTableRow key={item.personalityGroupId}>
-                        <CTableHeaderCell scope="row">{item.personalityGroupId}</CTableHeaderCell>
-                        <CTableDataCell>{item.personalityGroupName}</CTableDataCell>
-                        <CTableDataCell>{item.testTypeId}</CTableDataCell>
+                      <CTableRow key={item.id}>
+                        <CTableHeaderCell scope="row">{item.id}</CTableHeaderCell>
+                        <CTableDataCell>{item.testDescript}</CTableDataCell>
                         <CTableDataCell>
                           <CButton
-                            onClick={() => this.onUpdate(!large, item._id)}
+                            onClick={() => this.onUpdate(!large, item.id)}
                             className="mr-1 mb-1 mb-xl-0"
                             color="warning"
                           >
                             Sửa
                           </CButton>
                           <CButton
-                            onClick={() => this.onSubmit(item._id, 'xóa', null)}
+                            onClick={() => this.onSubmit(item.id, 'xóa', null)}
                             className="mr-1"
                             color="danger"
                           >

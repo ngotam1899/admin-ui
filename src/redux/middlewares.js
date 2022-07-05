@@ -1,11 +1,11 @@
-import axiosService from '../util/AxiosService';
+import axiosService from '../util/AxiosService'
 
 export default function createApiAuthMiddle({ dispatch, getState }) {
   return (next) => (action) => {
-    const authToken = localStorage.getItem("AUTH_USER");
+    const authToken = localStorage.getItem('AUTH_USER')
     axiosService.changeHeaders({
-      Authorization: authToken,
-    });
-    return next(action);
-  };
+      Authorization: 'Bearer ' + authToken,
+    })
+    return next(action)
+  }
 }

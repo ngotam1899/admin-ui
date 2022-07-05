@@ -1,26 +1,31 @@
-import { takeEvery, fork, all, call, put } from "redux-saga/effects";
-import { get } from "lodash";
-import PGActions, { PGActionTypes } from "../actions/personalityGroup";
-import { getAllPersonalityGroup, getDetailPersonalityGroup, addPersonalityGroup, updatePersonalityGroup, deletePersonalityGroup } from "../apis/personalityGroup";
+import { takeEvery, fork, all, call, put } from 'redux-saga/effects'
+import { get } from 'lodash'
+import PGActions, { PGActionTypes } from '../actions/personalityGroup'
+import {
+  getAllPersonalityGroup,
+  getDetailPersonalityGroup,
+  addPersonalityGroup,
+  updatePersonalityGroup,
+  deletePersonalityGroup,
+} from '../apis/personalityGroup'
 
 function* handleGetList({ payload }) {
   try {
-    const result = yield call(getAllPersonalityGroup, payload);
-    //const data = get(result, "data");
-    console.log(result)
-    yield put(PGActions.onGetListSuccess(result, null));
+    const result = yield call(getAllPersonalityGroup, payload)
+    const data = get(result, 'data')
+    yield put(PGActions.onGetListSuccess(data.data, data.count))
   } catch (error) {
-    yield put(PGActions.onGetListError(error));
+    yield put(PGActions.onGetListError(error))
   }
 }
 
 function* handleGetDetail({ filters, id }) {
   try {
-    const result = yield call(getDetailPersonalityGroup, id);
-    const data = get(result, "data", {});
-    yield put(PGActions.onGetDetailSuccess(data.ad));
+    const result = yield call(getDetailPersonalityGroup, id)
+    const data = get(result, 'data', {})
+    yield put(PGActions.onGetDetailSuccess(data.ad))
   } catch (error) {
-    yield put(PGActions.onGetDetailError(error));
+    yield put(PGActions.onGetDetailError(error))
   }
 }
 
@@ -30,14 +35,13 @@ function* handleGetDetail({ filters, id }) {
  */
 function* handleCreate({ payload }) {
   try {
-
-    const result = yield call(addPersonalityGroup, payload.data);
-    const data = get(result, "data", {});
-    if (data.code !== 201) throw data;
-    yield put(PGActions.onCreateSuccess(data.ad));
-    yield put(PGActions.onGetList(payload.params));
+    const result = yield call(addPersonalityGroup, payload.data)
+    const data = get(result, 'data', {})
+    if (data.code !== 201) throw data
+    yield put(PGActions.onCreateSuccess(data.ad))
+    yield put(PGActions.onGetList(payload.params))
   } catch (error) {
-    yield put(PGActions.onCreateError(error));
+    yield put(PGActions.onCreateError(error))
   }
 }
 
@@ -47,14 +51,14 @@ function* handleCreate({ payload }) {
  */
 function* handleUpdate({ payload }) {
   try {
-    const result = yield call(updatePersonalityGroup, payload.data, payload.id);
-    const data = get(result, "data", {});
-    if (data.code !== 200) throw data;
-    var detailResult = yield call(getAllPersonalityGroup, payload.id);
-    yield put(PGActions.onUpdateSuccess(get(detailResult, "data.ad")));
-    yield put(PGActions.onGetList(payload.params));
+    const result = yield call(updatePersonalityGroup, payload.data, payload.id)
+    const data = get(result, 'data', {})
+    if (data.code !== 200) throw data
+    var detailResult = yield call(getAllPersonalityGroup, payload.id)
+    yield put(PGActions.onUpdateSuccess(get(detailResult, 'data.ad')))
+    yield put(PGActions.onGetList(payload.params))
   } catch (error) {
-    yield put(PGActions.onUpdateError(error));
+    yield put(PGActions.onUpdateError(error))
   }
 }
 
@@ -64,13 +68,13 @@ function* handleUpdate({ payload }) {
  */
 function* handleDelete({ id, params }) {
   try {
-    const result = yield call(deletePersonalityGroup, id);
-    const data = get(result, "data", {});
-    if (data.code !== 200) throw data;
-    yield put(PGActions.onDeleteSuccess(data));
-    yield put(PGActions.onGetList(params));
+    const result = yield call(deletePersonalityGroup, id)
+    const data = get(result, 'data', {})
+    if (data.code !== 200) throw data
+    yield put(PGActions.onDeleteSuccess(data))
+    yield put(PGActions.onGetList(params))
   } catch (error) {
-    yield put(PGActions.onDeleteError(error));
+    yield put(PGActions.onDeleteError(error))
   }
 }
 
@@ -79,19 +83,19 @@ function* handleDelete({ id, params }) {
  */
 
 export function* watchGetList() {
-  yield takeEvery(PGActionTypes.GET_LIST, handleGetList);
+  yield takeEvery(PGActionTypes.GET_LIST, handleGetList)
 }
 export function* watchGetDetail() {
-  yield takeEvery(PGActionTypes.GET_DETAIL, handleGetDetail);
+  yield takeEvery(PGActionTypes.GET_DETAIL, handleGetDetail)
 }
 export function* watchCreate() {
-  yield takeEvery(PGActionTypes.CREATE, handleCreate);
+  yield takeEvery(PGActionTypes.CREATE, handleCreate)
 }
 export function* watchUpdate() {
-  yield takeEvery(PGActionTypes.UPDATE, handleUpdate);
+  yield takeEvery(PGActionTypes.UPDATE, handleUpdate)
 }
 export function* watchDelete() {
-  yield takeEvery(PGActionTypes.DELETE, handleDelete);
+  yield takeEvery(PGActionTypes.DELETE, handleDelete)
 }
 
 export default function* rootSaga() {
@@ -101,5 +105,5 @@ export default function* rootSaga() {
     fork(watchCreate),
     fork(watchUpdate),
     fork(watchDelete),
-  ]);
+  ])
 }

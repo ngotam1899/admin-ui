@@ -1,4 +1,4 @@
-export const PGActionTypes = {
+export const TestActionTypes = {
   GET_LIST: 'GET_LIST',
   GET_LIST_SUCCESS: 'GET_LIST_SUCCESS',
   GET_LIST_ERROR: 'GET_LIST_ERROR',
@@ -23,58 +23,58 @@ export const PGActionTypes = {
   CLEAR_STATE: 'CLEAR_STATE',
 }
 
-Object.keys(PGActionTypes).forEach((key) => {
-  PGActionTypes[key] = `PG_${PGActionTypes[key]}`
+Object.keys(TestActionTypes).forEach((key) => {
+  TestActionTypes[key] = `TEST_${TestActionTypes[key]}`
 })
 
 const onClearDetail = () => ({
-  type: PGActionTypes.CLEAR_DETAIL,
+  type: TestActionTypes.CLEAR_DETAIL,
 })
 
 const onClearState = () => ({
-  type: PGActionTypes.CLEAR_STATE,
+  type: TestActionTypes.CLEAR_STATE,
 })
 
 const onGetList = (payload) => ({
-  type: PGActionTypes.GET_LIST,
+  type: TestActionTypes.GET_LIST,
   payload,
 })
 
 const onGetListSuccess = (list, total) => ({
-  type: PGActionTypes.GET_LIST_SUCCESS,
+  type: TestActionTypes.GET_LIST_SUCCESS,
   payload: { list, total },
 })
 
 const onGetListError = (error) => ({
-  type: PGActionTypes.GET_LIST_ERROR,
+  type: TestActionTypes.GET_LIST_ERROR,
   payload: error,
 })
 
 const onGetDetail = (id) => ({
-  type: PGActionTypes.GET_DETAIL,
+  type: TestActionTypes.GET_DETAIL,
   id,
 })
 const onGetDetailSuccess = (data) => ({
-  type: PGActionTypes.GET_DETAIL_SUCCESS,
+  type: TestActionTypes.GET_DETAIL_SUCCESS,
   payload: data,
 })
 const onGetDetailError = (error) => ({
-  type: PGActionTypes.GET_DETAIL_ERROR,
+  type: TestActionTypes.GET_DETAIL_ERROR,
   payload: error,
 })
 
 const onCreate = (data, params) => ({
-  type: PGActionTypes.CREATE,
+  type: TestActionTypes.CREATE,
   payload: { data, params },
 })
 
 const onCreateSuccess = (detail) => ({
-  type: PGActionTypes.CREATE_SUCCESS,
+  type: TestActionTypes.CREATE_SUCCESS,
   payload: detail,
 })
 
 const onCreateError = (error) => ({
-  type: PGActionTypes.CREATE_ERROR,
+  type: TestActionTypes.CREATE_ERROR,
   payload: error,
 })
 
@@ -83,17 +83,17 @@ const onCreateError = (error) => ({
  * update
  */
 const onUpdate = (id, data, params) => ({
-  type: PGActionTypes.UPDATE,
+  type: TestActionTypes.UPDATE,
   payload: { id, data, params },
 })
 
 const onUpdateSuccess = (detail) => ({
-  type: PGActionTypes.UPDATE_SUCCESS,
+  type: TestActionTypes.UPDATE_SUCCESS,
   payload: detail,
 })
 
 const onUpdateError = (error) => ({
-  type: PGActionTypes.UPDATE_ERROR,
+  type: TestActionTypes.UPDATE_ERROR,
   payload: error,
 })
 
@@ -102,22 +102,22 @@ const onUpdateError = (error) => ({
  * delete
  */
 const onDelete = (id, params) => ({
-  type: PGActionTypes.DELETE,
+  type: TestActionTypes.DELETE,
   id,
   params,
 })
 
 const onDeleteSuccess = (detail) => ({
-  type: PGActionTypes.DELETE_SUCCESS,
+  type: TestActionTypes.DELETE_SUCCESS,
   payload: detail,
 })
 
 const onDeleteError = (error) => ({
-  type: PGActionTypes.DELETE_ERROR,
+  type: TestActionTypes.DELETE_ERROR,
   payload: error,
 })
 
-const PGActions = {
+const TestActions = {
   onGetList,
   onGetListSuccess,
   onGetListError,
@@ -142,4 +142,4 @@ const PGActions = {
   onDeleteError,
 }
 
-export default PGActions
+export default TestActions

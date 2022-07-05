@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Link, useNavigate  } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   CButton,
   CCard,
@@ -15,30 +15,29 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'
 // @Actions
 import AuthorizationActions from '../../../redux/actions/auth'
 
 const Login = () => {
-  const [inputField , setInputField] = useState({
+  const [inputField, setInputField] = useState({
     email: '',
-    password: ''
-  });
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const loggedIn = useSelector(state => (state.auth.loggedIn || false))
+    password: '',
+  })
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const loggedIn = useSelector((state) => state.auth.loggedIn || false)
 
   useEffect(() => {
+    if (loggedIn) navigate('/dashboard')
+  }, [loggedIn])
 
-    navigate("/dashboard");
-  }, [loggedIn]);
-
-  const inputsHandler = (e) =>{
-    setInputField( {...inputField, [e.target.name]: e.target.value} )
+  const inputsHandler = (e) => {
+    setInputField({ ...inputField, [e.target.name]: e.target.value })
   }
 
-  const onSubmit = (e) =>{
-    e.preventDefault();
+  const onSubmit = (e) => {
+    e.preventDefault()
     dispatch(AuthorizationActions.onLogin(inputField))
   }
 
@@ -62,7 +61,8 @@ const Login = () => {
                         name="email"
                         onChange={inputsHandler}
                         placeholder="Email"
-                        value={inputField.email} />
+                        value={inputField.email}
+                      />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
                       <CInputGroupText>
@@ -71,7 +71,9 @@ const Login = () => {
                       <CFormInput
                         type="password"
                         placeholder="Password"
-                        name="password" onChange={inputsHandler} value={inputField.password}
+                        name="password"
+                        onChange={inputsHandler}
+                        value={inputField.password}
                       />
                     </CInputGroup>
                     <CRow>

@@ -34,6 +34,12 @@ const _nav = [
     to: '/manage/personalityGroups',
     icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
   },
+  {
+    component: CNavItem,
+    name: 'Test',
+    to: '/manage/test',
+    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+  },
 ]
 
 export default _nav
