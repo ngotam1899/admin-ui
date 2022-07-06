@@ -34,10 +34,6 @@ function List(props) {
 
   useEffect(() => {
     loadData()
-  }, [])
-
-  useEffect(() => {
-    loadData()
   }, [location])
 
   const loadData = () => {

@@ -38,10 +38,6 @@ function List(props) {
 
   useEffect(() => {
     loadData()
-  }, [])
-
-  useEffect(() => {
-    loadData()
   }, [location])
 
   const loadData = () => {
@@ -110,8 +106,8 @@ function List(props) {
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                {pgs.length > 0 &&
-                  pgs.map((item) => {
+                {tests.length > 0 &&
+                  tests.map((item) => {
                     return (
                       <CTableRow key={item.id}>
                         <CTableHeaderCell scope="row">{item.id}</CTableHeaderCell>
