@@ -1,7 +1,14 @@
 import { takeEvery, fork, all, call, put } from 'redux-saga/effects'
 import { get } from 'lodash'
 import TestActions, { TestActionTypes } from '../actions/test'
-import { getAllTest, getDetailTest, addTest, updateTest, deleteTest } from '../apis/test'
+import {
+  getAllTest,
+  getAllType,
+  getDetailTest,
+  addTest,
+  updateTest,
+  deleteTest,
+} from '../apis/test'
 
 function* handleGetList({ payload }) {
   try {
@@ -10,6 +17,16 @@ function* handleGetList({ payload }) {
     yield put(TestActions.onGetListSuccess(data.data, data.count))
   } catch (error) {
     yield put(TestActions.onGetListError(error))
+  }
+}
+
+function* handleGetType({ payload }) {
+  try {
+    const result = yield call(getAllType, payload)
+    const data = get(result, 'data')
+    yield put(TestActions.onGetTypeSuccess(data))
+  } catch (error) {
+    yield put(TestActions.onGetTypeError(error))
   }
 }
 
@@ -79,6 +96,9 @@ function* handleDelete({ id, params }) {
 export function* watchGetList() {
   yield takeEvery(TestActionTypes.GET_LIST, handleGetList)
 }
+export function* watchGetType() {
+  yield takeEvery(TestActionTypes.GET_TYPE, handleGetType)
+}
 export function* watchGetDetail() {
   yield takeEvery(TestActionTypes.GET_DETAIL, handleGetDetail)
 }
@@ -95,6 +115,7 @@ export function* watchDelete() {
 export default function* rootSaga() {
   yield all([
     fork(watchGetList),
+    fork(watchGetType),
     fork(watchGetDetail),
     fork(watchCreate),
     fork(watchUpdate),

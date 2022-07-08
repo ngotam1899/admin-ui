@@ -19,6 +19,11 @@ export const getAllTest = (params = {}) => {
   return axiosService.get(`${ENDPOINT}${url}/All${queryParams}`)
 }
 
+// https://release-mto.herokuapp.com/api/tests/type METHOD = GET
+export const getAllType = () => {
+  return axiosService.get(`${ENDPOINT}${url}/type`)
+}
+
 // https://release-mto.herokuapp.com/api/tests/:test_id   METHOD = GET
 export const getDetailTest = (test_id) => {
   return axiosService.get(`${ENDPOINT}${url}/${test_id}`)
