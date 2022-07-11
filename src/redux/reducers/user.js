@@ -1,5 +1,5 @@
 import { get } from 'lodash'
-import { QuestionActionTypes } from '../actions/question'
+import { UserActionTypes } from '../actions/user'
 import { toastError, toastSuccess } from '../../util/toastHelper'
 
 const init = {
@@ -10,84 +10,84 @@ const init = {
 
 export default function (state = init, action) {
   switch (action.type) {
-    case QuestionActionTypes.CLEAR_DETAIL:
+    case UserActionTypes.CLEAR_DETAIL:
       return {
         ...state,
         detail: null,
         loadingDetail: true,
       }
-    case QuestionActionTypes.CLEAR_STATE:
+    case UserActionTypes.CLEAR_STATE:
       return {
         ...init,
       }
-    case QuestionActionTypes.GET_LIST:
+    case UserActionTypes.GET_LIST:
       return {
         ...state,
         loading: true,
       }
-    case QuestionActionTypes.GET_LIST_SUCCESS:
+    case UserActionTypes.GET_LIST_SUCCESS:
       return {
         ...state,
         loading: false,
         total: get(action, 'payload.total'),
         list: get(action, 'payload.list', []),
       }
-    case QuestionActionTypes.GET_TYPE:
+    case UserActionTypes.GET_TYPE:
       return {
         ...state,
         loading: true,
         type: [],
       }
-    case QuestionActionTypes.GET_TYPE_SUCCESS:
+    case UserActionTypes.GET_TYPE_SUCCESS:
       return {
         ...state,
         loading: false,
         type: get(action, 'payload.list', []),
       }
-    case QuestionActionTypes.GET_DETAIL:
+    case UserActionTypes.GET_DETAIL:
       return {
         ...state,
         loadingDetail: true,
         detail: null,
       }
-    case QuestionActionTypes.GET_DETAIL_SUCCESS:
+    case UserActionTypes.GET_DETAIL_SUCCESS:
       return {
         ...state,
         loadingDetail: false,
         detail: action.payload,
       }
-    case QuestionActionTypes.CREATE:
-    case QuestionActionTypes.UPDATE:
-    case QuestionActionTypes.DELETE:
+    case UserActionTypes.CREATE:
+    case UserActionTypes.UPDATE:
+    case UserActionTypes.DELETE:
       return {
         ...state,
         processing: true,
       }
-    case QuestionActionTypes.GET_LIST_ERROR:
-    case QuestionActionTypes.GET_TYPE_ERROR:
-    case QuestionActionTypes.GET_DETAIL_ERROR:
-    case QuestionActionTypes.CREATE_ERROR:
-    case QuestionActionTypes.UPDATE_ERROR:
-    case QuestionActionTypes.DELETE_ERROR:
+    case UserActionTypes.GET_LIST_ERROR:
+    case UserActionTypes.GET_TYPE_ERROR:
+    case UserActionTypes.GET_DETAIL_ERROR:
+    case UserActionTypes.CREATE_ERROR:
+    case UserActionTypes.UPDATE_ERROR:
+    case UserActionTypes.DELETE_ERROR:
       var { message } = action.payload
       toastError(message)
       return {
         ...state,
         processing: false,
       }
-    case QuestionActionTypes.UPDATE_SUCCESS:
+    case UserActionTypes.UPDATE_SUCCESS:
       toastSuccess('Cập nhật thành công')
       return {
         ...state,
         processing: true,
       }
-    case QuestionActionTypes.CREATE_SUCCESS:
+    case UserActionTypes.CREATE_SUCCESS:
       toastSuccess('Tạo mới thành công')
       return {
         ...state,
         processing: true,
       }
-    case QuestionActionTypes.DELETE_SUCCESS:
+    case UserActionTypes.DELETE_SUCCESS:
       toastSuccess('Xóa thành công')
       return {
         ...state,

@@ -4,6 +4,7 @@ const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 const PersonalityGroup = React.lazy(() => import('./containers/PersonalityGroup/List'))
 const Test = React.lazy(() => import('./containers/Test/List'))
 const Question = React.lazy(() => import('./containers/Question/List'))
+const User = React.lazy(() => import('./containers/SysUser/List'))
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -11,6 +12,7 @@ const routes = [
   { path: '/manage/personalityGroups', name: 'Personality Group', element: PersonalityGroup },
   { path: '/manage/test', name: 'Test', element: Test },
   { path: '/manage/question', name: 'Question', element: Question },
+  { path: '/manage/user', name: 'User', element: User },
 ]
 
 export default routes

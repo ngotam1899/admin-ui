@@ -1,7 +1,7 @@
 import { takeEvery, fork, all, call, put } from 'redux-saga/effects'
 import { get } from 'lodash'
-import QuestionActions, { QuestionActionTypes } from '../actions/personalityGroup'
-import { getQuestionByTestID } from '../apis/test'
+import QuestionActions, { QuestionActionTypes } from '../actions/question'
+import { getQuestionByTestID } from '../apis/question'
 import {
   getAllPersonalityGroup,
   getDetailPersonalityGroup,
@@ -12,7 +12,7 @@ import {
 
 function* handleGetList({ payload }) {
   try {
-    const result = yield call(getQuestionByTestID, payload)
+    const result = yield call(getQuestionByTestID, payload.test_id, payload.params)
     const data = get(result, 'data')
     yield put(QuestionActions.onGetListSuccess(data.data, data.count))
   } catch (error) {

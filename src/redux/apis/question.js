@@ -7,8 +7,12 @@ import queryString from 'query-string'
 // https://release-mto.herokuapp.com/api/questions/{test_id}  METHOD = GET
 const url = '/questions'
 
-export const getQuestionByTestID = (test_id) => {
-  return axiosService.get(`${ENDPOINT}${url}/${test_id}`)
+export const getQuestionByTestID = (test_id, params = {}) => {
+  let queryParams = ''
+  if (Object.keys(params).length > 0) {
+    queryParams = `?${queryString.stringify(params)}`
+  }
+  return axiosService.get(`${ENDPOINT}${url}/${test_id}${queryParams}`)
 }
 
 // https://release-mto.herokuapp.com/api/personality_groups/:pgroup_id   METHOD = GET
