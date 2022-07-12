@@ -63,9 +63,9 @@ const onGetDetailError = (error) => ({
   payload: error,
 })
 
-const onCreate = (data, params) => ({
+const onCreate = (payload) => ({
   type: QuestionActionTypes.CREATE,
-  payload: { data, params },
+  payload,
 })
 
 const onCreateSuccess = (detail) => ({

@@ -45,8 +45,9 @@ function* handleGetDetail({ filters, id }) {
  * create
  */
 function* handleCreate({ payload }) {
+  console.log(payload)
   try {
-    const result = yield call(addTest, payload.data)
+    const result = yield call(addTest, payload.data.test_id, payload.data)
     const data = get(result, 'data', {})
     if (data.code !== 201) throw data
     yield put(TestActions.onCreateSuccess(data.ad))

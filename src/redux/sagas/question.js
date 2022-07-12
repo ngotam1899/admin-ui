@@ -1,7 +1,7 @@
 import { takeEvery, fork, all, call, put } from 'redux-saga/effects'
 import { get } from 'lodash'
 import QuestionActions, { QuestionActionTypes } from '../actions/question'
-import { getQuestionByTestID } from '../apis/question'
+import { getQuestionByTestID, addQuestionByTestID } from '../apis/question'
 import {
   getAllPersonalityGroup,
   getDetailPersonalityGroup,
@@ -35,8 +35,9 @@ function* handleGetDetail({ filters, id }) {
  * create
  */
 function* handleCreate({ payload }) {
+  console.log(payload)
   try {
-    const result = yield call(addPersonalityGroup, payload.data)
+    const result = yield call(addQuestionByTestID, payload.test_id, payload.data)
     const data = get(result, 'data', {})
     if (data.code !== 201) throw data
     yield put(QuestionActions.onCreateSuccess(data.ad))

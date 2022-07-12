@@ -24,16 +24,19 @@ import TestActions from '../../redux/actions/test'
 import Pagination from 'react-js-pagination'
 import getFilterParams from '../../util/getFilterParams'
 import qs from 'query-string'
+import Detail from './Detail'
 
 function List(props) {
   const [filter, setFilter] = useState({
     PageNumber: 1,
     PageSize: 10,
   })
+  const [large, setLarge] = useState(false)
   const navigate = useNavigate()
   const location = useLocation()
   const dispatch = useDispatch()
   const tests = useSelector((state) => state.test.list || [])
+  const detail = useSelector((state) => state.test.detail || null)
   const total = useSelector((state) => state.test.total || 0)
 
   useEffect(() => {
@@ -65,6 +68,16 @@ function List(props) {
     navigate(`${pathname}?${qs.stringify(queryParams)}`)
   }
 
+  const onUpdate = (large, id) => {
+    setLarge(large)
+    dispatch(TestActions.onGetDetail(id))
+  }
+
+  const onClose = (large) => {
+    setLarge(large)
+    dispatch(TestActions.onClearDetail())
+  }
+
   return (
     <CRow>
       <CCol>
@@ -86,7 +99,7 @@ function List(props) {
                   Xóa tất cả bộ lọc
                 </CButton>
                 <CButton
-                  onClick={() => this.setLarge(!large)}
+                  onClick={() => setLarge(!large)}
                   className="mb-1 float-right"
                   color="success"
                 >
@@ -114,42 +127,42 @@ function List(props) {
                         <CTableDataCell>{item.testDescript}</CTableDataCell>
                         <CTableDataCell>
                           <CButton
-                            onClick={() => this.onUpdate(!large, item.id)}
+                            onClick={() => onUpdate(!large, item.id)}
                             className="mr-1 mb-1 mb-xl-0"
                             color="warning"
                           >
                             Sửa
                           </CButton>
-                          <CButton
+                          {/* <CButton
                             onClick={() => this.onSubmit(item.id, 'xóa', null)}
                             className="mr-1"
                             color="danger"
                           >
                             Xóa
-                          </CButton>
+                          </CButton> */}
                         </CTableDataCell>
                       </CTableRow>
                     )
                   })}
               </CTableBody>
             </CTable>
-            {/* {adDetail && large && (
-                <AdDetail
-                  large={large}
-                  ad={adDetail}
-                  onClose={this.onClose}
-                  onClearDetail={onClearDetail}
-                  queryParams={queryParams}
-                />
-              )}
-              {!adDetail && large && (
-                <AdDetail
-                  large={large}
-                  onClose={this.onClose}
-                  onClearDetail={onClearDetail}
-                  queryParams={queryParams}
-                />
-              )} */}
+            {detail && large && (
+              <Detail
+                large={large}
+                detail={detail}
+                onClose={onClose}
+                onClearDetail={TestActions.onClearDetail}
+                filter={filter}
+              />
+            )}
+            {!detail && large && (
+              <Detail
+                large={large}
+                onClose={onClose}
+                onClearDetail={TestActions.onClearDetail}
+                filter={filter}
+              />
+            )}
           </CCardBody>
           <CCardFooter>
             {total && total > 10 && (

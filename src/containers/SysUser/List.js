@@ -17,12 +17,10 @@ import {
   CButton,
   CRow,
 } from '@coreui/react'
-import PGActions from '../../redux/actions/personalityGroup'
 import UserActions from '../../redux/actions/user'
 import Detail from './Detail'
 
 function List(props) {
-  const navigate = useNavigate()
   const [large, setLarge] = useState(false)
   const location = useLocation()
   const dispatch = useDispatch()
@@ -145,11 +143,7 @@ function List(props) {
               />
             )}
             {!detail && large && (
-              <Detail
-                large={large}
-                onClose={this.onClose}
-                onClearDetail={UserActions.onClearDetail}
-              />
+              <Detail large={large} onClose={onClose} onClearDetail={UserActions.onClearDetail} />
             )}
           </CCardBody>
         </CCard>

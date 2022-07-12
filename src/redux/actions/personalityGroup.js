@@ -7,17 +7,9 @@ export const PGActionTypes = {
   GET_DETAIL_SUCCESS: 'GET_DETAIL_SUCCESS',
   GET_DETAIL_ERROR: 'GET_DETAIL_ERROR',
 
-  CREATE: 'CREATE',
-  CREATE_SUCCESS: 'CREATE_SUCCESS',
-  CREATE_ERROR: 'CREATE_ERROR',
-
   UPDATE: 'UPDATE',
   UPDATE_SUCCESS: 'UPDATE_SUCCESS',
   UPDATE_ERROR: 'UPDATE_ERROR',
-
-  DELETE: 'DELETE',
-  DELETE_SUCCESS: 'DELETE_SUCCESS',
-  DELETE_ERROR: 'DELETE_ERROR',
 
   CLEAR_DETAIL: 'CLEAR_DETAIL',
   CLEAR_STATE: 'CLEAR_STATE',
@@ -63,28 +55,13 @@ const onGetDetailError = (error) => ({
   payload: error,
 })
 
-const onCreate = (data, params) => ({
-  type: PGActionTypes.CREATE,
-  payload: { data, params },
-})
-
-const onCreateSuccess = (detail) => ({
-  type: PGActionTypes.CREATE_SUCCESS,
-  payload: detail,
-})
-
-const onCreateError = (error) => ({
-  type: PGActionTypes.CREATE_ERROR,
-  payload: error,
-})
-
 /**
  *
  * update
  */
-const onUpdate = (id, data, params) => ({
+const onUpdate = (payload) => ({
   type: PGActionTypes.UPDATE,
-  payload: { id, data, params },
+  payload,
 })
 
 const onUpdateSuccess = (detail) => ({
@@ -94,26 +71,6 @@ const onUpdateSuccess = (detail) => ({
 
 const onUpdateError = (error) => ({
   type: PGActionTypes.UPDATE_ERROR,
-  payload: error,
-})
-
-/**
- *
- * delete
- */
-const onDelete = (id, params) => ({
-  type: PGActionTypes.DELETE,
-  id,
-  params,
-})
-
-const onDeleteSuccess = (detail) => ({
-  type: PGActionTypes.DELETE_SUCCESS,
-  payload: detail,
-})
-
-const onDeleteError = (error) => ({
-  type: PGActionTypes.DELETE_ERROR,
   payload: error,
 })
 
@@ -129,17 +86,9 @@ const PGActions = {
   onGetDetailSuccess,
   onGetDetailError,
 
-  onCreate,
-  onCreateSuccess,
-  onCreateError,
-
   onUpdate,
   onUpdateSuccess,
   onUpdateError,
-
-  onDelete,
-  onDeleteSuccess,
-  onDeleteError,
 }
 
 export default PGActions

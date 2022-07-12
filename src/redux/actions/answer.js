@@ -1,11 +1,7 @@
-export const TestActionTypes = {
+export const AnswerActionTypes = {
   GET_LIST: 'GET_LIST',
   GET_LIST_SUCCESS: 'GET_LIST_SUCCESS',
   GET_LIST_ERROR: 'GET_LIST_ERROR',
-
-  GET_TYPE: 'GET_TYPE',
-  GET_TYPE_SUCCESS: 'GET_TYPE_SUCCESS',
-  GET_TYPE_ERROR: 'GET_TYPE_ERROR',
 
   GET_DETAIL: 'GET_DETAIL',
   GET_DETAIL_SUCCESS: 'GET_DETAIL_SUCCESS',
@@ -27,73 +23,58 @@ export const TestActionTypes = {
   CLEAR_STATE: 'CLEAR_STATE',
 }
 
-Object.keys(TestActionTypes).forEach((key) => {
-  TestActionTypes[key] = `TEST_${TestActionTypes[key]}`
+Object.keys(AnswerActionTypes).forEach((key) => {
+  AnswerActionTypes[key] = `ANSWER_${AnswerActionTypes[key]}`
 })
 
 const onClearDetail = () => ({
-  type: TestActionTypes.CLEAR_DETAIL,
+  type: AnswerActionTypes.CLEAR_DETAIL,
 })
 
 const onClearState = () => ({
-  type: TestActionTypes.CLEAR_STATE,
+  type: AnswerActionTypes.CLEAR_STATE,
 })
 
 const onGetList = (payload) => ({
-  type: TestActionTypes.GET_LIST,
+  type: AnswerActionTypes.GET_LIST,
   payload,
 })
 
 const onGetListSuccess = (list, total) => ({
-  type: TestActionTypes.GET_LIST_SUCCESS,
+  type: AnswerActionTypes.GET_LIST_SUCCESS,
   payload: { list, total },
 })
 
 const onGetListError = (error) => ({
-  type: TestActionTypes.GET_LIST_ERROR,
-  payload: error,
-})
-
-const onGetType = (payload) => ({
-  type: TestActionTypes.GET_TYPE,
-  payload,
-})
-
-const onGetTypeSuccess = (list) => ({
-  type: TestActionTypes.GET_TYPE_SUCCESS,
-  payload: { list },
-})
-
-const onGetTypeError = (error) => ({
-  type: TestActionTypes.GET_TYPE_ERROR,
+  type: AnswerActionTypes.GET_LIST_ERROR,
   payload: error,
 })
 
 const onGetDetail = (id) => ({
-  type: TestActionTypes.GET_DETAIL,
+  type: AnswerActionTypes.GET_DETAIL,
   id,
 })
 const onGetDetailSuccess = (data) => ({
-  type: TestActionTypes.GET_DETAIL_SUCCESS,
+  type: AnswerActionTypes.GET_DETAIL_SUCCESS,
   payload: data,
 })
 const onGetDetailError = (error) => ({
-  type: TestActionTypes.GET_DETAIL_ERROR,
+  type: AnswerActionTypes.GET_DETAIL_ERROR,
   payload: error,
 })
 
 const onCreate = (payload) => ({
-  type: TestActionTypes.CREATE,
+  type: AnswerActionTypes.CREATE,
   payload,
 })
 
 const onCreateSuccess = (detail) => ({
-  type: TestActionTypes.CREATE_SUCCESS,
+  type: AnswerActionTypes.CREATE_SUCCESS,
   payload: detail,
 })
 
 const onCreateError = (error) => ({
-  type: TestActionTypes.CREATE_ERROR,
+  type: AnswerActionTypes.CREATE_ERROR,
   payload: error,
 })
 
@@ -102,17 +83,17 @@ const onCreateError = (error) => ({
  * update
  */
 const onUpdate = (id, data, params) => ({
-  type: TestActionTypes.UPDATE,
+  type: AnswerActionTypes.UPDATE,
   payload: { id, data, params },
 })
 
 const onUpdateSuccess = (detail) => ({
-  type: TestActionTypes.UPDATE_SUCCESS,
+  type: AnswerActionTypes.UPDATE_SUCCESS,
   payload: detail,
 })
 
 const onUpdateError = (error) => ({
-  type: TestActionTypes.UPDATE_ERROR,
+  type: AnswerActionTypes.UPDATE_ERROR,
   payload: error,
 })
 
@@ -121,29 +102,25 @@ const onUpdateError = (error) => ({
  * delete
  */
 const onDelete = (id, params) => ({
-  type: TestActionTypes.DELETE,
+  type: AnswerActionTypes.DELETE,
   id,
   params,
 })
 
 const onDeleteSuccess = (detail) => ({
-  type: TestActionTypes.DELETE_SUCCESS,
+  type: AnswerActionTypes.DELETE_SUCCESS,
   payload: detail,
 })
 
 const onDeleteError = (error) => ({
-  type: TestActionTypes.DELETE_ERROR,
+  type: AnswerActionTypes.DELETE_ERROR,
   payload: error,
 })
 
-const TestActions = {
+const AnswerActions = {
   onGetList,
   onGetListSuccess,
   onGetListError,
-
-  onGetType,
-  onGetTypeSuccess,
-  onGetTypeError,
 
   onClearDetail,
   onClearState,
@@ -165,4 +142,4 @@ const TestActions = {
   onDeleteError,
 }
 
-export default TestActions
+export default AnswerActions

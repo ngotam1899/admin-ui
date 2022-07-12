@@ -18,6 +18,8 @@ function Detail(props) {
   const { large, detail, onClose, onClearDetail } = props
   const [inputField, setInputField] = useState({})
 
+  useEffect(() => () => onClearDetail(), [])
+
   useEffect(() => {
     setInputField({
       fullName: detail && detail.fullName,
@@ -70,6 +72,7 @@ function Detail(props) {
                   <div className="mb-2">
                     <CFormLabel htmlFor="gender">Gender</CFormLabel>
                     <CFormSelect
+                      disabled
                       name="gender"
                       value={inputField.gender || 'false'}
                       onChange={inputsHandler}
@@ -82,6 +85,7 @@ function Detail(props) {
                   <div className="mb-2">
                     <CFormLabel htmlFor="phoneNumberd">Phone</CFormLabel>
                     <CFormInput
+                      disabled
                       type="text"
                       name="phoneNumber"
                       id="phoneNumber"
@@ -92,6 +96,7 @@ function Detail(props) {
                   <div className="mb-2">
                     <CFormLabel htmlFor="birthDay">Birthday</CFormLabel>
                     <CFormInput
+                      disabled
                       type="date"
                       name="birthDay"
                       id="birthDay"
@@ -104,6 +109,7 @@ function Detail(props) {
                   <div className="mb-2">
                     <CFormLabel htmlFor="email">Email</CFormLabel>
                     <CFormInput
+                      disabled
                       type="mail"
                       name="email"
                       id="email"
@@ -112,8 +118,14 @@ function Detail(props) {
                     />
                   </div>
                   <div className="mb-2">
-                    <CFormLabel htmlFor="role">Role</CFormLabel>
-                    <CFormSelect name="role" value={inputField.role} onChange={inputsHandler}>
+                    <CFormLabel htmlFor="roleName">Role</CFormLabel>
+                    <CFormSelect
+                      name="roleName"
+                      id="roleName"
+                      value={inputField.roleName}
+                      onChange={inputsHandler}
+                      disabled
+                    >
                       <option>Select the role</option>
                       <option value="student">Student</option>
                       <option value="admin">Admin</option>
@@ -123,7 +135,9 @@ function Detail(props) {
                     <CFormSwitch
                       label="Locked"
                       id="isLocked"
-                      value={inputField.isLocked}
+                      name="isLocked"
+                      defaultChecked={inputField.isLocked}
+                      disabled
                       onChange={inputsHandler}
                     />
                   </div>
@@ -137,6 +151,7 @@ function Detail(props) {
                           id="grade"
                           value={inputField.grade || ''}
                           onChange={inputsHandler}
+                          disabled
                         />
                       </div>
                       <div className="mb-2">
@@ -147,6 +162,7 @@ function Detail(props) {
                           id="gpa10"
                           value={inputField.gpa10 || ''}
                           onChange={inputsHandler}
+                          disabled
                         />
                       </div>
                     </div>
@@ -159,6 +175,7 @@ function Detail(props) {
                           id="gpa11"
                           value={inputField.gpa11 || ''}
                           onChange={inputsHandler}
+                          disabled
                         />
                       </div>
                       <div className="mb-2">
@@ -169,6 +186,7 @@ function Detail(props) {
                           id="gpa12"
                           value={inputField.gpa12 || ''}
                           onChange={inputsHandler}
+                          disabled
                         />
                       </div>
                     </div>

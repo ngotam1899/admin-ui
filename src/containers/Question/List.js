@@ -27,17 +27,20 @@ import QuestionActions from '../../redux/actions/question'
 import Pagination from 'react-js-pagination'
 import getFilterParams from '../../util/getFilterParams'
 import qs from 'query-string'
+import Detail from './Detail'
 
 function List(props) {
   const [filter, setFilter] = useState({
     PageNumber: 1,
     PageSize: 10,
   })
+  const [large, setLarge] = useState(false)
   const [activeKey, setActiveKey] = useState(1)
   const navigate = useNavigate()
   const location = useLocation()
   const dispatch = useDispatch()
   const question = useSelector((state) => state.question.list || [])
+  const detail = useSelector((state) => state.user.detail || {})
   const type = useSelector((state) => state.test.type || [])
   const total = useSelector((state) => state.question.total || 0)
 
@@ -83,6 +86,11 @@ function List(props) {
     navigate(`${pathname}?${qs.stringify(queryParams)}`)
   }
 
+  const onClose = (large) => {
+    setLarge(large)
+    dispatch(QuestionActions.onClearDetail())
+  }
+
   return (
     <CRow>
       <CCol>
@@ -123,12 +131,12 @@ function List(props) {
                   Xóa tất cả bộ lọc
                 </CButton>
                 <CButton
-                  onClick={() => this.setLarge(!large)}
+                  onClick={() => setLarge(!large)}
                   className="mb-1 float-right"
                   color="success"
                 >
                   {' '}
-                  Add a Personality Group
+                  Add a Question
                 </CButton>
               </div>
             </div>
@@ -182,23 +190,25 @@ function List(props) {
                 })}
             </CTabContent>
 
-            {/* {adDetail && large && (
-                <AdDetail
-                  large={large}
-                  ad={adDetail}
-                  onClose={this.onClose}
-                  onClearDetail={onClearDetail}
-                  queryParams={queryParams}
-                />
-              )}
-              {!adDetail && large && (
-                <AdDetail
-                  large={large}
-                  onClose={this.onClose}
-                  onClearDetail={onClearDetail}
-                  queryParams={queryParams}
-                />
-              )} */}
+            {detail && large && (
+              <Detail
+                large={large}
+                detail={detail}
+                onClose={onClose}
+                onClearDetail={QuestionActions.onClearDetail}
+                filter={filter}
+                test_id={activeKey}
+              />
+            )}
+            {!detail && large && (
+              <Detail
+                large={large}
+                onClose={onClose}
+                onClearDetail={QuestionActions.onClearDetail}
+                filter={filter}
+                test_id={activeKey}
+              />
+            )}
           </CCardBody>
           <CCardFooter>
             {total && total > 10 && (

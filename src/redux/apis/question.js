@@ -15,22 +15,7 @@ export const getQuestionByTestID = (test_id, params = {}) => {
   return axiosService.get(`${ENDPOINT}${url}/${test_id}${queryParams}`)
 }
 
-// https://release-mto.herokuapp.com/api/personality_groups/:pgroup_id   METHOD = GET
-export const getDetailPersonalityGroup = (pgroup_id) => {
-  return axiosService.get(`${ENDPOINT}${url}/${pgroup_id}`)
-}
-
-// https://release-mto.herokuapp.com/api/personality_groups  METHOD = POST
-export const addPersonalityGroup = (data) => {
-  return axiosService.post(`${ENDPOINT}${url}`, data)
-}
-
-// https://release-mto.herokuapp.com/api/personality_groups/:pgroup_id  METHOD = PUT
-export const updatePersonalityGroup = (data, pgroup_id) => {
-  return axiosService.put(`${ENDPOINT}${url}/${pgroup_id}`, data)
-}
-
-// https://release-mto.herokuapp.com/api/personality_groups/:pgroup_id  METHOD = DELETE
-export const deletePersonalityGroup = (pgroup_id) => {
-  return axiosService.delete(`${ENDPOINT}${url}/${pgroup_id}`)
+// https://release-mto.herokuapp.com/api/questions/{test_id}  METHOD = POST
+export const addQuestionByTestID = (test_id, data) => {
+  return axiosService.post(`${ENDPOINT}${url}/${test_id}`, data)
 }

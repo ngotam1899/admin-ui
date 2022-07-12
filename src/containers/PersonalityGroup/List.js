@@ -20,8 +20,10 @@ import PGActions from '../../redux/actions/personalityGroup'
 import Pagination from 'react-js-pagination'
 import getFilterParams from '../../util/getFilterParams'
 import qs from 'query-string'
+import Detail from './Detail'
 
 function List(props) {
+  const [large, setLarge] = useState(false)
   const [filter, setFilter] = useState({
     PageNumber: 1,
     PageSize: 10,
@@ -31,6 +33,7 @@ function List(props) {
   const dispatch = useDispatch()
   const pgs = useSelector((state) => state.personalityGroup.list || [])
   const total = useSelector((state) => state.personalityGroup.total || 0)
+  const detail = useSelector((state) => state.personalityGroup.detail || {})
 
   useEffect(() => {
     loadData()
@@ -59,6 +62,16 @@ function List(props) {
     }
     setFilter(queryParams)
     navigate(`${pathname}?${qs.stringify(queryParams)}`)
+  }
+
+  const onUpdate = (large, id) => {
+    setLarge(large)
+    dispatch(PGActions.onGetDetail(id))
+  }
+
+  const onClose = (large) => {
+    setLarge(large)
+    dispatch(PGActions.onClearDetail())
   }
 
   return (
@@ -112,42 +125,42 @@ function List(props) {
                         <CTableDataCell>{item.testTypeId}</CTableDataCell>
                         <CTableDataCell>
                           <CButton
-                            onClick={() => this.onUpdate(!large, item._id)}
+                            onClick={() => onUpdate(!large, item.personalityGroupId)}
                             className="mr-1 mb-1 mb-xl-0"
                             color="warning"
                           >
                             Sửa
                           </CButton>
-                          <CButton
+                          {/* <CButton
                             onClick={() => this.onSubmit(item._id, 'xóa', null)}
                             className="mr-1"
                             color="danger"
                           >
                             Xóa
-                          </CButton>
+                          </CButton> */}
                         </CTableDataCell>
                       </CTableRow>
                     )
                   })}
               </CTableBody>
             </CTable>
-            {/* {adDetail && large && (
-                <AdDetail
-                  large={large}
-                  ad={adDetail}
-                  onClose={this.onClose}
-                  onClearDetail={onClearDetail}
-                  queryParams={queryParams}
-                />
-              )}
-              {!adDetail && large && (
-                <AdDetail
-                  large={large}
-                  onClose={this.onClose}
-                  onClearDetail={onClearDetail}
-                  queryParams={queryParams}
-                />
-              )} */}
+            {detail && large && (
+              <Detail
+                large={large}
+                detail={detail}
+                onClose={onClose}
+                onClearDetail={PGActions.onClearDetail}
+                filter={filter}
+              />
+            )}
+            {!detail && large && (
+              <Detail
+                large={large}
+                onClose={onClose}
+                onClearDetail={PGActions.onClearDetail}
+                filter={filter}
+              />
+            )}
           </CCardBody>
           <CCardFooter>
             {total && total > 10 && (
