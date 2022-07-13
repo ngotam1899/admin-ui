@@ -50,9 +50,9 @@ const onGetListError = (error) => ({
   payload: error,
 })
 
-const onGetDetail = (id) => ({
+const onGetDetail = (payload) => ({
   type: AnswerActionTypes.GET_DETAIL,
-  id,
+  payload,
 })
 const onGetDetailSuccess = (data) => ({
   type: AnswerActionTypes.GET_DETAIL_SUCCESS,
@@ -82,9 +82,9 @@ const onCreateError = (error) => ({
  *
  * update
  */
-const onUpdate = (id, data, params) => ({
+const onUpdate = (payload) => ({
   type: AnswerActionTypes.UPDATE,
-  payload: { id, data, params },
+  payload,
 })
 
 const onUpdateSuccess = (detail) => ({

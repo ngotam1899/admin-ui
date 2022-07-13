@@ -22,12 +22,14 @@ import {
   CTabPane,
 } from '@coreui/react'
 import PGActions from '../../redux/actions/personalityGroup'
+import AnswerActions from '../../redux/actions/answer'
 import TestActions from '../../redux/actions/test'
 import QuestionActions from '../../redux/actions/question'
 import Pagination from 'react-js-pagination'
 import getFilterParams from '../../util/getFilterParams'
 import qs from 'query-string'
 import Detail from './Detail'
+import AnswerList from './AnswerList'
 
 function List(props) {
   const [filter, setFilter] = useState({
@@ -35,12 +37,15 @@ function List(props) {
     PageSize: 10,
   })
   const [large, setLarge] = useState(false)
+  const [modalType, setModalType] = useState('EDIT')
   const [activeKey, setActiveKey] = useState(1)
+  const [questionId, setQuestionId] = useState(1)
   const navigate = useNavigate()
   const location = useLocation()
   const dispatch = useDispatch()
   const question = useSelector((state) => state.question.list || [])
-  const detail = useSelector((state) => state.user.detail || {})
+  const detail = useSelector((state) => state.question.detail || null)
+  const answer = useSelector((state) => state.answer.list || [])
   const type = useSelector((state) => state.test.type || [])
   const total = useSelector((state) => state.question.total || 0)
 
@@ -55,7 +60,7 @@ function List(props) {
       ...filters,
     }
     dispatch(QuestionActions.onClearState())
-    dispatch(QuestionActions.onGetList({ test_id: activeKey, params }))
+    activeKey !== 1 && dispatch(QuestionActions.onGetList({ test_id: activeKey, params }))
   }, [activeKey])
 
   const loadData = () => {
@@ -89,6 +94,20 @@ function List(props) {
   const onClose = (large) => {
     setLarge(large)
     dispatch(QuestionActions.onClearDetail())
+    dispatch(AnswerActions.onClearState())
+  }
+
+  const onUpdate = (large, id) => {
+    setLarge(large)
+    setModalType('EDIT')
+    dispatch(QuestionActions.onGetDetail(id))
+  }
+
+  const onViewAnswer = (large, id) => {
+    setLarge(large)
+    setQuestionId(id)
+    setModalType('VIEW_ANSWER')
+    dispatch(AnswerActions.onGetList(id))
   }
 
   return (
@@ -166,19 +185,19 @@ function List(props) {
                                   <CTableDataCell>{item.orderIndex}</CTableDataCell>
                                   <CTableDataCell>
                                     <CButton
-                                      onClick={() => this.onUpdate(!large, item._id)}
+                                      onClick={() => onUpdate(!large, item.questionId)}
                                       className="mr-1 mb-1 mb-xl-0"
                                       color="warning"
                                     >
-                                      Sửa
+                                      Edit
                                     </CButton>
-                                    {/* <CButton
-                                      onClick={() => this.onSubmit(item._id, 'xóa', null)}
+                                    <CButton
+                                      onClick={() => onViewAnswer(!large, item.questionId)}
                                       className="mr-1"
-                                      color="danger"
+                                      color="info"
                                     >
-                                      Xóa
-                                    </CButton> */}
+                                      View Answer
+                                    </CButton>
                                   </CTableDataCell>
                                 </CTableRow>
                               )
@@ -190,7 +209,7 @@ function List(props) {
                 })}
             </CTabContent>
 
-            {detail && large && (
+            {detail && modalType === 'EDIT' && large && (
               <Detail
                 large={large}
                 detail={detail}
@@ -200,13 +219,22 @@ function List(props) {
                 test_id={activeKey}
               />
             )}
-            {!detail && large && (
+            {!detail && modalType === 'EDIT' && large && (
               <Detail
                 large={large}
                 onClose={onClose}
                 onClearDetail={QuestionActions.onClearDetail}
                 filter={filter}
                 test_id={activeKey}
+              />
+            )}
+            {answer && modalType === 'VIEW_ANSWER' && large && (
+              <AnswerList
+                answer={answer}
+                large={large}
+                onClose={onClose}
+                onClearDetail={QuestionActions.onClearDetail}
+                question_id={questionId}
               />
             )}
           </CCardBody>

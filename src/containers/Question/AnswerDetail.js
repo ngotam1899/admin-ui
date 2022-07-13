@@ -12,17 +12,17 @@ import {
   CFormInput,
   CFormTextarea,
 } from '@coreui/react'
-import QuestionActions from '../../redux/actions/question'
+import AnswerActions from '../../redux/actions/answer'
 
-function Detail(props) {
-  const { large, detail, onClose, onClearDetail, filter, test_id } = props
+function AnswerDetail(props) {
+  const { modal, detail, question_id, onCloseModal, onClearDetail } = props
   const [inputField, setInputField] = useState({})
-
   const dispatch = useDispatch()
 
   useEffect(() => {
+    console.log(detail)
     setInputField({
-      questionContent: detail && detail.questionContent,
+      answerContent: detail && detail.answerContent,
       orderIndex: detail && detail.orderIndex,
     })
   }, [detail])
@@ -37,28 +37,26 @@ function Detail(props) {
   const onSubmit = () => {
     if (detail) {
       dispatch(
-        QuestionActions.onUpdate({
-          test_id: test_id,
-          question_id: detail.questionId,
+        AnswerActions.onUpdate({
+          answer_id: detail.answerId,
+          question_id: question_id,
           data: inputField,
-          params: filter,
         }),
       )
     } else {
       dispatch(
-        QuestionActions.onCreate({
-          test_id: test_id,
+        AnswerActions.onCreate({
+          question_id: question_id,
           data: inputField,
-          params: filter,
         }),
       )
     }
   }
 
   return (
-    <CModal visible={large} onClose={() => onClose(!large)} size="lg">
+    <CModal visible={modal} onClose={() => onCloseModal(!modal)} size="lg" alignment="center">
       <CModalHeader closeButton>
-        <CModalTitle>{detail ? 'Edit a question' : 'Add new question'}</CModalTitle>
+        <CModalTitle>{detail ? 'Edit an Answer' : 'Add new Answer'}</CModalTitle>
       </CModalHeader>
       <CModalBody>
         <div className="row">
@@ -67,13 +65,13 @@ function Detail(props) {
               <div className="row">
                 <div className="col-12">
                   <div className="mb-2">
-                    <CFormLabel htmlFor="questionContent">Question Content</CFormLabel>
+                    <CFormLabel htmlFor="answerContent">Answer Content</CFormLabel>
                     <CFormTextarea
-                      id="questionContent"
+                      id="answerContent"
                       rows="3"
-                      value={inputField.questionContent || ''}
+                      value={inputField.answerContent || ''}
                       onChange={inputsHandler}
-                      name="questionContent"
+                      name="answerContent"
                     />
                   </div>
                   <div className="mb-2">
@@ -93,10 +91,10 @@ function Detail(props) {
         </div>
       </CModalBody>
       <CModalFooter>
-        <CButton color="primary" onClick={() => onSubmit(!large)}>
+        <CButton color="primary" onClick={() => onSubmit(!modal)}>
           Save
         </CButton>{' '}
-        <CButton color="secondary" onClick={() => onClose(!large)}>
+        <CButton color="secondary" onClick={() => onCloseModal(!modal)}>
           Cancel
         </CButton>
       </CModalFooter>
@@ -104,4 +102,4 @@ function Detail(props) {
   )
 }
 
-export default Detail
+export default AnswerDetail

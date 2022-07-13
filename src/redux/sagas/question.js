@@ -1,7 +1,12 @@
 import { takeEvery, fork, all, call, put } from 'redux-saga/effects'
 import { get } from 'lodash'
 import QuestionActions, { QuestionActionTypes } from '../actions/question'
-import { getQuestionByTestID, addQuestionByTestID } from '../apis/question'
+import {
+  getQuestionByTestID,
+  getDetailQuestion,
+  addQuestionByTestID,
+  updateQuestion,
+} from '../apis/question'
 import {
   getAllPersonalityGroup,
   getDetailPersonalityGroup,
@@ -22,9 +27,9 @@ function* handleGetList({ payload }) {
 
 function* handleGetDetail({ filters, id }) {
   try {
-    const result = yield call(getDetailPersonalityGroup, id)
+    const result = yield call(getDetailQuestion, id)
     const data = get(result, 'data', {})
-    yield put(QuestionActions.onGetDetailSuccess(data.ad))
+    yield put(QuestionActions.onGetDetailSuccess(data))
   } catch (error) {
     yield put(QuestionActions.onGetDetailError(error))
   }
@@ -39,9 +44,8 @@ function* handleCreate({ payload }) {
   try {
     const result = yield call(addQuestionByTestID, payload.test_id, payload.data)
     const data = get(result, 'data', {})
-    if (data.code !== 201) throw data
     yield put(QuestionActions.onCreateSuccess(data.ad))
-    yield put(QuestionActions.onGetList(payload.params))
+    yield put(QuestionActions.onGetList({ test_id: payload.test_id, params: payload.params }))
   } catch (error) {
     yield put(QuestionActions.onCreateError(error))
   }
@@ -52,13 +56,13 @@ function* handleCreate({ payload }) {
  * update
  */
 function* handleUpdate({ payload }) {
+  console.log(payload)
   try {
-    const result = yield call(updatePersonalityGroup, payload.data, payload.id)
+    const result = yield call(updateQuestion, payload.question_id, payload.data)
     const data = get(result, 'data', {})
-    if (data.code !== 200) throw data
-    var detailResult = yield call(getAllPersonalityGroup, payload.id)
-    yield put(QuestionActions.onUpdateSuccess(get(detailResult, 'data.ad')))
-    yield put(QuestionActions.onGetList(payload.params))
+    var detailResult = yield call(getDetailQuestion, payload.question_id)
+    yield put(QuestionActions.onUpdateSuccess(get(detailResult, 'data')))
+    yield put(QuestionActions.onGetList({ test_id: payload.test_id, params: payload.params }))
   } catch (error) {
     yield put(QuestionActions.onUpdateError(error))
   }

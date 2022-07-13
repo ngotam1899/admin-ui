@@ -4,7 +4,7 @@ import axiosService from '../../util/AxiosService'
 import { ENDPOINT } from '../../constants/index'
 import queryString from 'query-string'
 
-// https://release-mto.herokuapp.com/api/personality_groups  METHOD = GET
+// https://release-mto.herokuapp.com/api/answers/question/{question_id}  METHOD = GET
 const url = '/answers'
 
 export const getAllAnswersByQuestionID = (question_id, params = {}) => {
@@ -12,22 +12,22 @@ export const getAllAnswersByQuestionID = (question_id, params = {}) => {
   if (Object.keys(params).length > 0) {
     queryParams = `?${queryString.stringify(params)}`
   }
-  return axiosService.get(`${ENDPOINT}${url}/${question_id}${queryParams}`)
+  return axiosService.get(`${ENDPOINT}${url}/question/${question_id}${queryParams}`)
 }
 
-// https://release-mto.herokuapp.com/api/personality_groups/:pgroup_id/detail   METHOD = GET
-export const getDetailPersonalityGroup = (pgroup_id) => {
-  return axiosService.get(`${ENDPOINT}${url}/${pgroup_id}/detail`)
+// https://release-mto.herokuapp.com/api/answers/{answer_id}/detail   METHOD = GET
+export const getDetailAnswer = (answer_id) => {
+  return axiosService.get(`${ENDPOINT}${url}/${answer_id}/detail`)
 }
 
-// https://release-mto.herokuapp.com/api/personality_groups  METHOD = POST
-export const addPersonalityGroup = (data) => {
-  return axiosService.post(`${ENDPOINT}${url}`, data)
+// https://release-mto.herokuapp.com/api/answers/question/{question_id}  METHOD = POST
+export const addAnswerByQuestionID = (question_id, data) => {
+  return axiosService.post(`${ENDPOINT}${url}/question/${question_id}`, data)
 }
 
-// https://release-mto.herokuapp.com/api/personality_groups/:pgroup_id  METHOD = PUT
-export const updatePersonalityGroup = (data, pgroup_id) => {
-  return axiosService.put(`${ENDPOINT}${url}/${pgroup_id}`, data)
+// https://release-mto.herokuapp.com/api/answers/{answer_id}  METHOD = PUT
+export const updateAnswer = (answer_id, data) => {
+  return axiosService.put(`${ENDPOINT}${url}/${answer_id}`, data)
 }
 
 // https://release-mto.herokuapp.com/api/personality_groups/:pgroup_id  METHOD = DELETE

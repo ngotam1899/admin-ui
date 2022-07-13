@@ -1,5 +1,5 @@
 import { get } from 'lodash'
-import { AnswerActionTypes } from '../actions/test'
+import { AnswerActionTypes } from '../actions/answer'
 import { toastError, toastSuccess } from '../../util/toastHelper'
 
 const init = {
