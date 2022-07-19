@@ -63,7 +63,6 @@ const Dashboard = () => {
                       },
                     ],
                   }}
-                  labels="months"
                 />
               )}
             </CCardBody>

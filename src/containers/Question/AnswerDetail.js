@@ -52,7 +52,8 @@ function AnswerDetail(props) {
     })
   }
 
-  const onSubmit = () => {
+  const onSubmit = (modal) => {
+    onCloseModal(modal)
     if (detail) {
       dispatch(
         AnswerActions.onUpdate({

@@ -34,7 +34,8 @@ function Detail(props) {
     })
   }
 
-  const onSubmit = () => {
+  const onSubmit = (large) => {
+    onClose(large)
     if (detail) {
       dispatch(
         QuestionActions.onUpdate({
