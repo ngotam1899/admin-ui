@@ -25,6 +25,10 @@ export const TestActionTypes = {
 
   CLEAR_DETAIL: 'CLEAR_DETAIL',
   CLEAR_STATE: 'CLEAR_STATE',
+
+  STATISTIC_PG: 'STATISTIC_PG',
+  STATISTIC_PG_SUCCESS: 'STATISTIC_PG_SUCCESS',
+  STATISTIC_PG_ERROR: 'STATISTIC_PG_ERROR',
 }
 
 Object.keys(TestActionTypes).forEach((key) => {
@@ -136,6 +140,25 @@ const onDeleteError = (error) => ({
   payload: error,
 })
 
+/**
+ *
+ * statistic personality group
+ */
+
+const onStatisticPG = () => ({
+  type: TestActionTypes.STATISTIC_PG,
+})
+
+const onStatisticPGSuccess = (payload) => ({
+  type: TestActionTypes.STATISTIC_PG_SUCCESS,
+  payload,
+})
+
+const onStatisticPGError = (error) => ({
+  type: TestActionTypes.STATISTIC_PG_ERROR,
+  payload: error,
+})
+
 const TestActions = {
   onGetList,
   onGetListSuccess,
@@ -163,6 +186,10 @@ const TestActions = {
   onDelete,
   onDeleteSuccess,
   onDeleteError,
+
+  onStatisticPG,
+  onStatisticPGSuccess,
+  onStatisticPGError,
 }
 
 export default TestActions

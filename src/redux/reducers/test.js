@@ -32,6 +32,18 @@ export default function (state = init, action) {
         total: get(action, 'payload.total'),
         list: get(action, 'payload.list', []),
       }
+    case TestActionTypes.STATISTIC_PG:
+      return {
+        ...state,
+        loading: true,
+        pg: [],
+      }
+    case TestActionTypes.STATISTIC_PG_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        pg: get(action, 'payload', []),
+      }
     case TestActionTypes.GET_TYPE:
       return {
         ...state,
@@ -69,6 +81,7 @@ export default function (state = init, action) {
     case TestActionTypes.CREATE_ERROR:
     case TestActionTypes.UPDATE_ERROR:
     case TestActionTypes.DELETE_ERROR:
+    case TestActionTypes.STATISTIC_PG_ERROR:
       var { message } = action.payload
       toastError(message)
       return {

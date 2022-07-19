@@ -43,3 +43,8 @@ export const updateTest = (data, test_id) => {
 export const deleteTest = (test_id) => {
   return axiosService.delete(`${ENDPOINT}${url}/${test_id}`)
 }
+
+// https://release-mto.herokuapp.com/api/tests/personality_gorup/statistic  METHOD = GET
+export const statisticPersonalityGroup = (test_id) => {
+  return axiosService.get(`${ENDPOINT}${url}/personality_gorup/statistic`)
+}

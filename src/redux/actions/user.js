@@ -82,9 +82,9 @@ const onCreateError = (error) => ({
  *
  * update
  */
-const onUpdate = (id, data, params) => ({
+const onUpdate = (payload) => ({
   type: UserActionTypes.UPDATE,
-  payload: { id, data, params },
+  payload,
 })
 
 const onUpdateSuccess = (detail) => ({

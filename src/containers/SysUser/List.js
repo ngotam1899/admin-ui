@@ -40,6 +40,17 @@ function List(props) {
     dispatch(UserActions.onGetDetail(id))
   }
 
+  const onChangeStatus = (userId, enbDisable) => {
+    dispatch(
+      UserActions.onUpdate({
+        data: {
+          userId,
+          enbDisable,
+        },
+      }),
+    )
+  }
+
   const onClose = (large) => {
     setLarge(large)
     dispatch(UserActions.onClearDetail())
@@ -119,15 +130,15 @@ function List(props) {
                             className="mr-1 mb-1 mb-xl-0"
                             color="warning"
                           >
-                            Sửa
-                          </CButton>
-                          {/* <CButton
-                            onClick={() => this.onSubmit(item._id, 'xóa', null)}
+                            Edit
+                          </CButton>{' '}
+                          <CButton
+                            onClick={() => onChangeStatus(item.userId, !item.isLocked)}
                             className="mr-1"
-                            color="danger"
+                            color={item.isLocked ? 'danger' : 'success'}
                           >
-                            Xóa
-                          </CButton> */}
+                            {item.isLocked ? 'Disable' : 'Active'}
+                          </CButton>
                         </CTableDataCell>
                       </CTableRow>
                     )

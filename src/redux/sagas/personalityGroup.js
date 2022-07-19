@@ -34,10 +34,8 @@ function* handleGetDetail({ filters, id }) {
  */
 function* handleUpdate({ payload }) {
   try {
-    console.log(payload)
     const result = yield call(updatePersonalityGroup, payload.data, payload.id)
     const data = get(result, 'data', {})
-    if (data.code !== 200) throw data
     var detailResult = yield call(getAllPersonalityGroup, payload.id)
     yield put(PGActions.onUpdateSuccess(get(detailResult, 'data.ad')))
     yield put(PGActions.onGetList(payload.params))

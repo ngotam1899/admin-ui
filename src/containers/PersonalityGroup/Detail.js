@@ -30,10 +30,11 @@ function Detail(props) {
     setInputField({ ...inputField, [e.target.name]: e.target.value })
   }
 
-  const onSubmit = () => {
+  const onSubmit = (large) => {
+    onClose(large)
     dispatch(
       PGActions.onUpdate({
-        data: inputField,
+        data: { ...inputField, personalityGroupName: inputField.name },
         id: detail.id,
       }),
     )

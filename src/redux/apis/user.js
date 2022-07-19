@@ -25,9 +25,9 @@ export const addTest = (data) => {
   return axiosService.post(`${ENDPOINT}${url}`, data)
 }
 
-// https://release-mto.herokuapp.com/api/tests/:test_id  METHOD = PUT
-export const updateTest = (data, test_id) => {
-  return axiosService.put(`${ENDPOINT}${url}/${test_id}`, data)
+// https://release-mto.herokuapp.com/api/sys_users  METHOD = PUT
+export const updateUser = (data) => {
+  return axiosService.put(`${ENDPOINT}${url}`, data)
 }
 
 // https://release-mto.herokuapp.com/api/tests/:test_id  METHOD = DELETE

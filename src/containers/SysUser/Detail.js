@@ -198,9 +198,6 @@ function Detail(props) {
         </div>
       </CModalBody>
       <CModalFooter>
-        <CButton color="primary" onClick={() => this.onSubmit(!large)}>
-          Save
-        </CButton>{' '}
         <CButton color="secondary" onClick={() => onClose(!large)}>
           Cancel
         </CButton>

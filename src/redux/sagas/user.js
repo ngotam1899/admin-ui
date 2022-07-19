@@ -1,7 +1,7 @@
 import { takeEvery, fork, all, call, put } from 'redux-saga/effects'
 import { get } from 'lodash'
 import UserActions, { UserActionTypes } from '../actions/user'
-import { getAllUser, getDetailUser } from '../apis/user'
+import { getAllUser, getDetailUser, updateUser } from '../apis/user'
 import {
   getAllTest,
   getAllType,
@@ -53,11 +53,11 @@ function* handleCreate({ payload }) {
  */
 function* handleUpdate({ payload }) {
   try {
-    const result = yield call(updateTest, payload.data, payload.id)
+    console.log(payload.data)
+    const result = yield call(updateUser, payload.data)
     const data = get(result, 'data', {})
-    if (data.code !== 200) throw data
-    var detailResult = yield call(getAllTest, payload.id)
-    yield put(UserActions.onUpdateSuccess(get(detailResult, 'data.ad')))
+    var detailResult = yield call(getAllUser, payload)
+    yield put(UserActions.onUpdateSuccess(get(detailResult, 'data')))
     yield put(UserActions.onGetList(payload.params))
   } catch (error) {
     yield put(UserActions.onUpdateError(error))

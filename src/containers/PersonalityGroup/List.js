@@ -129,7 +129,7 @@ function List(props) {
                             className="mr-1 mb-1 mb-xl-0"
                             color="warning"
                           >
-                            Sửa
+                            Edit
                           </CButton>
                           {/* <CButton
                             onClick={() => this.onSubmit(item._id, 'xóa', null)}

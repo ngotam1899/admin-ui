@@ -8,6 +8,7 @@ import {
   addTest,
   updateTest,
   deleteTest,
+  statisticPersonalityGroup,
 } from '../apis/test'
 
 function* handleGetList({ payload }) {
@@ -45,7 +46,6 @@ function* handleGetDetail({ filters, id }) {
  * create
  */
 function* handleCreate({ payload }) {
-  console.log(payload)
   try {
     const result = yield call(addTest, payload.data.test_id, payload.data)
     const data = get(result, 'data', {})
@@ -92,6 +92,20 @@ function* handleDelete({ id, params }) {
 
 /**
  *
+ * statistic personality group
+ */
+function* handleStatisticPG() {
+  try {
+    const result = yield call(statisticPersonalityGroup)
+    const data = get(result, 'data')
+    yield put(TestActions.onStatisticPGSuccess(data))
+  } catch (error) {
+    yield put(TestActions.onStatisticPGError(error))
+  }
+}
+
+/**
+ *
  */
 
 export function* watchGetList() {
@@ -112,6 +126,9 @@ export function* watchUpdate() {
 export function* watchDelete() {
   yield takeEvery(TestActionTypes.DELETE, handleDelete)
 }
+export function* watchStatisticPG() {
+  yield takeEvery(TestActionTypes.STATISTIC_PG, handleStatisticPG)
+}
 
 export default function* rootSaga() {
   yield all([
@@ -121,5 +138,6 @@ export default function* rootSaga() {
     fork(watchCreate),
     fork(watchUpdate),
     fork(watchDelete),
+    fork(watchStatisticPG),
   ])
 }
