@@ -31,11 +31,11 @@ function* handleGetType({ payload }) {
   }
 }
 
-function* handleGetDetail({ filters, id }) {
+function* handleGetDetail({ payload }) {
   try {
-    const result = yield call(getDetailTest, id)
+    const result = yield call(getDetailTest, payload)
     const data = get(result, 'data', {})
-    yield put(TestActions.onGetDetailSuccess(data.ad))
+    yield put(TestActions.onGetDetailSuccess(data))
   } catch (error) {
     yield put(TestActions.onGetDetailError(error))
   }
@@ -47,11 +47,10 @@ function* handleGetDetail({ filters, id }) {
  */
 function* handleCreate({ payload }) {
   try {
-    const result = yield call(addTest, payload.data.test_id, payload.data)
+    const result = yield call(addTest, payload.type_id, payload.data)
     const data = get(result, 'data', {})
-    if (data.code !== 201) throw data
-    yield put(TestActions.onCreateSuccess(data.ad))
-    yield put(TestActions.onGetList(payload.params))
+    yield put(TestActions.onCreateSuccess(data))
+    yield put(TestActions.onGetList())
   } catch (error) {
     yield put(TestActions.onCreateError(error))
   }
@@ -63,12 +62,11 @@ function* handleCreate({ payload }) {
  */
 function* handleUpdate({ payload }) {
   try {
-    const result = yield call(updateTest, payload.data, payload.id)
-    const data = get(result, 'data', {})
-    if (data.code !== 200) throw data
+    console.log(payload)
+    const result = yield call(updateTest, payload.id, payload.data)
     var detailResult = yield call(getAllTest, payload.id)
-    yield put(TestActions.onUpdateSuccess(get(detailResult, 'data.ad')))
-    yield put(TestActions.onGetList(payload.params))
+    yield put(TestActions.onUpdateSuccess(get(detailResult, 'data')))
+    yield put(TestActions.onGetList())
   } catch (error) {
     yield put(TestActions.onUpdateError(error))
   }

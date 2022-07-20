@@ -73,9 +73,9 @@ const onGetTypeError = (error) => ({
   payload: error,
 })
 
-const onGetDetail = (id) => ({
+const onGetDetail = (payload) => ({
   type: TestActionTypes.GET_DETAIL,
-  id,
+  payload,
 })
 const onGetDetailSuccess = (data) => ({
   type: TestActionTypes.GET_DETAIL_SUCCESS,
@@ -105,9 +105,9 @@ const onCreateError = (error) => ({
  *
  * update
  */
-const onUpdate = (id, data, params) => ({
+const onUpdate = (payload) => ({
   type: TestActionTypes.UPDATE,
-  payload: { id, data, params },
+  payload,
 })
 
 const onUpdateSuccess = (detail) => ({

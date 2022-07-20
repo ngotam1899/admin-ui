@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import {
   CButton,
   CModal,
@@ -10,19 +10,24 @@ import {
   CForm,
   CFormLabel,
   CFormTextarea,
+  CFormSelect,
 } from '@coreui/react'
 import TestActions from '../../redux/actions/test'
 
 function Detail(props) {
   const { large, detail, onClose, onClearDetail, filter, test_id } = props
   const [inputField, setInputField] = useState({})
-
+  const type = useSelector((state) => state.test.type || [])
   const dispatch = useDispatch()
 
   useEffect(() => {
-    console.log(detail)
+    dispatch(TestActions.onGetType())
+  }, [])
+
+  useEffect(() => {
     setInputField({
       testDescrip: detail && detail.testDescrip,
+      typeId: detail && detail.testType.typeId,
     })
   }, [detail])
 
@@ -34,12 +39,21 @@ function Detail(props) {
   }
 
   const onSubmit = () => {
-    dispatch(
-      TestActions.onCreate({
-        test_id: test_id,
-        data: inputField,
-      }),
-    )
+    if (detail) {
+      dispatch(
+        TestActions.onUpdate({
+          id: detail.testId,
+          data: { ...inputField, testDescript: inputField.testDescrip },
+        }),
+      )
+    } else {
+      dispatch(
+        TestActions.onCreate({
+          type_id: inputField.typeId,
+          data: inputField,
+        }),
+      )
+    }
   }
 
   return (
@@ -62,6 +76,25 @@ function Detail(props) {
                       onChange={inputsHandler}
                       name="testDescrip"
                     ></CFormTextarea>
+                  </div>
+                  <div className="mb-2">
+                    <CFormLabel htmlFor="typeId">Type ID</CFormLabel>
+                    <CFormSelect
+                      id="typeId"
+                      value={inputField.typeId || ''}
+                      onChange={inputsHandler}
+                      name="typeId"
+                    >
+                      <option value="">Select a type</option>
+                      {type &&
+                        type.map((item, index) => {
+                          return (
+                            <option key={index} value={item.id}>
+                              {item.name}
+                            </option>
+                          )
+                        })}
+                    </CFormSelect>
                   </div>
                 </div>
               </div>
