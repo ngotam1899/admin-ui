@@ -68,9 +68,10 @@ function List(props) {
                   Có tất cả {user.length} kết quả tìm kiếm
                 </p>
                 <CButton
-                  onClick={() => this.setLarge(!large)}
+                  onClick={() => setLarge(!large)}
                   className="float-right"
                   color="success"
+                  disabled
                 >
                   Add a Personality Group
                 </CButton>

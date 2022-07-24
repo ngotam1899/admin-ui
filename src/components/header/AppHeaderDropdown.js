@@ -3,13 +3,17 @@ import { useNavigate } from 'react-router-dom'
 import {
   CButton,
 } from '@coreui/react'
+import AuthorizationActions from '../../redux/actions/auth'
+import { useDispatch } from 'react-redux'
 
 const AppHeaderDropdown = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const onLogout = () => {
     localStorage.removeItem("AUTH_USER");
-    navigate(`login`)
+    dispatch(AuthorizationActions.onLogout())
+    navigate(`/#/login`)
   }
 
   return (

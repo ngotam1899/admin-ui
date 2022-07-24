@@ -50,9 +50,9 @@ const onGetListError = (error) => ({
   payload: error,
 })
 
-const onGetDetail = (id) => ({
+const onGetDetail = (payload) => ({
   type: CollegeActionTypes.GET_DETAIL,
-  id,
+  payload,
 })
 const onGetDetailSuccess = (data) => ({
   type: CollegeActionTypes.GET_DETAIL_SUCCESS,

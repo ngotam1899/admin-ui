@@ -31,9 +31,9 @@ function List(props) {
   const navigate = useNavigate()
   const location = useLocation()
   const dispatch = useDispatch()
-  const pgs = useSelector((state) => state.college.list || [])
+  const colleges = useSelector((state) => state.college.list || [])
   const total = useSelector((state) => state.college.total || 0)
-  const detail = useSelector((state) => state.college.detail || {})
+  const detail = useSelector((state) => state.college.detail || null)
 
   useEffect(() => {
     loadData()
@@ -86,7 +86,7 @@ function List(props) {
                   Có tất cả {total} kết quả tìm kiếm
                 </p>
                 <CButton
-                  onClick={() => this.setLarge(!large)}
+                  onClick={() => setLarge(!large)}
                   className="float-right"
                   color="success"
                 >
@@ -99,23 +99,25 @@ function List(props) {
             <CTable responsive="xxl">
               <CTableHead>
                 <CTableRow>
-                  <CTableHeaderCell scope="col">Group ID</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Group Name</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Test Type</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">ID</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Name</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Image</CTableHeaderCell>
+                  <CTableHeaderCell scope="col">Link</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody>
-                {pgs.length > 0 &&
-                  pgs.map((item) => {
+                {colleges.length > 0 &&
+                  colleges.map((item) => {
                     return (
-                      <CTableRow key={item.personalityGroupId}>
-                        <CTableHeaderCell scope="row">{item.personalityGroupId}</CTableHeaderCell>
-                        <CTableDataCell>{item.personalityGroupName}</CTableDataCell>
-                        <CTableDataCell>{item.testTypeId}</CTableDataCell>
+                      <CTableRow key={item.collegeId}>
+                        <CTableHeaderCell scope="row">{item.collegeId}</CTableHeaderCell>
+                        <CTableDataCell>{item.collegeName}</CTableDataCell>
+                        <CTableDataCell><img style={{width:'5vw'}} src={item.imagePath} alt="" /></CTableDataCell>
+                        <CTableDataCell>{item.referenceLink}</CTableDataCell>
                         <CTableDataCell>
                           <CButton
-                            onClick={() => onUpdate(!large, item.personalityGroupId)}
+                            onClick={() => onUpdate(!large, item.collegeId)}
                             className="mr-1 mb-1 mb-xl-0"
                             color="warning"
                           >
@@ -139,7 +141,7 @@ function List(props) {
                 large={large}
                 detail={detail}
                 onClose={onClose}
-                onClearDetail={PGActions.onClearDetail}
+                onClearDetail={CollegeActions.onClearDetail}
                 filter={filter}
               />
             )}
@@ -147,7 +149,7 @@ function List(props) {
               <Detail
                 large={large}
                 onClose={onClose}
-                onClearDetail={PGActions.onClearDetail}
+                onClearDetail={CollegeActions.onClearDetail}
                 filter={filter}
               />
             )}
