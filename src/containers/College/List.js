@@ -16,7 +16,7 @@ import {
   CButton,
   CRow,
 } from '@coreui/react'
-import PGActions from '../../redux/actions/personalityGroup'
+import CollegeActions from '../../redux/actions/college'
 import Pagination from 'react-js-pagination'
 import getFilterParams from '../../util/getFilterParams'
 import qs from 'query-string'
@@ -31,9 +31,9 @@ function List(props) {
   const navigate = useNavigate()
   const location = useLocation()
   const dispatch = useDispatch()
-  const pgs = useSelector((state) => state.personalityGroup.list || [])
-  const total = useSelector((state) => state.personalityGroup.total || 0)
-  const detail = useSelector((state) => state.personalityGroup.detail || {})
+  const pgs = useSelector((state) => state.college.list || [])
+  const total = useSelector((state) => state.college.total || 0)
+  const detail = useSelector((state) => state.college.detail || {})
 
   useEffect(() => {
     loadData()
@@ -46,7 +46,7 @@ function List(props) {
       ...filters,
     }
     setFilter(params)
-    dispatch(PGActions.onGetList(params))
+    dispatch(CollegeActions.onGetList(params))
   }
 
   // phân trang
@@ -66,12 +66,12 @@ function List(props) {
 
   const onUpdate = (large, id) => {
     setLarge(large)
-    dispatch(PGActions.onGetDetail(id))
+    dispatch(CollegeActions.onGetDetail(id))
   }
 
   const onClose = (large) => {
     setLarge(large)
-    dispatch(PGActions.onClearDetail())
+    dispatch(CollegeActions.onClearDetail())
   }
 
   return (
@@ -81,7 +81,7 @@ function List(props) {
           <CCardHeader>
             <div className="row">
               <div className="col-6">
-                <h5 className="my-2">List of Personality Group</h5>
+                <h5 className="my-2">List of College</h5>
                 <p className="float-left my-2 mr-3 font-italic">
                   Có tất cả {total} kết quả tìm kiếm
                 </p>
@@ -90,7 +90,7 @@ function List(props) {
                   className="float-right"
                   color="success"
                 >
-                  Add a Personality Group
+                  Add a College
                 </CButton>
               </div>
             </div>

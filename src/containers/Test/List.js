@@ -90,20 +90,10 @@ function List(props) {
                   Có tất cả {total} kết quả tìm kiếm
                 </p>
                 <CButton
-                  className="ml-2 float-left"
-                  onClick={() => this.destroyFilter()}
-                  color="info"
-                >
-                  {' '}
-                  <i className="fa fa-eraser mr-1"></i>
-                  Xóa tất cả bộ lọc
-                </CButton>
-                <CButton
                   onClick={() => setLarge(!large)}
                   className="mb-1 float-right"
                   color="success"
                 >
-                  {' '}
                   Add a Test
                 </CButton>
               </div>

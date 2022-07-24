@@ -68,20 +68,10 @@ function List(props) {
                   Có tất cả {user.length} kết quả tìm kiếm
                 </p>
                 <CButton
-                  className="ml-2 float-left"
-                  onClick={() => this.destroyFilter()}
-                  color="info"
-                >
-                  {' '}
-                  <i className="fa fa-eraser mr-1"></i>
-                  Xóa tất cả bộ lọc
-                </CButton>
-                <CButton
                   onClick={() => this.setLarge(!large)}
-                  className="mb-1 float-right"
+                  className="float-right"
                   color="success"
                 >
-                  {' '}
                   Add a Personality Group
                 </CButton>
               </div>
