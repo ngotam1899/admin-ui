@@ -25,12 +25,12 @@ export const addCollege = (data) => {
   return axiosService.post(`${ENDPOINT}${url}`, data)
 }
 
-// https://release-mto.herokuapp.com/api/personality_groups/:pgroup_id  METHOD = PUT
-export const updatePersonalityGroup = (data, pgroup_id) => {
-  return axiosService.put(`${ENDPOINT}${url}/${pgroup_id}`, data)
+// https://release-mto.herokuapp.com/api/colleges  METHOD = PUT
+export const updateCollege = (data) => {
+  return axiosService.put(`${ENDPOINT}${url}`, data)
 }
 
-// https://release-mto.herokuapp.com/api/personality_groups/:pgroup_id  METHOD = DELETE
-export const deletePersonalityGroup = (pgroup_id) => {
-  return axiosService.delete(`${ENDPOINT}${url}/${pgroup_id}`)
+// https://release-mto.herokuapp.com/api/colleges/Point  METHOD = PUT
+export const updateSubjectPoint = (data) => {
+  return axiosService.put(`${ENDPOINT}${url}/Point`, data)
 }

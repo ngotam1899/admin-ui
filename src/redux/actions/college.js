@@ -15,9 +15,9 @@ export const CollegeActionTypes = {
   UPDATE_SUCCESS: 'UPDATE_SUCCESS',
   UPDATE_ERROR: 'UPDATE_ERROR',
 
-  DELETE: 'DELETE',
-  DELETE_SUCCESS: 'DELETE_SUCCESS',
-  DELETE_ERROR: 'DELETE_ERROR',
+  UPDATE_SUBJECT_POINT: 'UPDATE_SUBJECT_POINT',
+  UPDATE_SUBJECT_POINT_SUCCESS: 'UPDATE_SUBJECT_POINT_SUCCESS',
+  UPDATE_SUBJECT_POINT_ERROR: 'UPDATE_SUBJECT_POINT_ERROR',
 
   CLEAR_DETAIL: 'CLEAR_DETAIL',
   CLEAR_STATE: 'CLEAR_STATE',
@@ -99,21 +99,20 @@ const onUpdateError = (error) => ({
 
 /**
  *
- * delete
+ * UPDATE SUBJECT POINT
  */
-const onDelete = (id, params) => ({
-  type: CollegeActionTypes.DELETE,
-  id,
-  params,
+const onUpdateSubjectPoint = (payload) => ({
+  type: CollegeActionTypes.UPDATE_SUBJECT_POINT,
+  payload
 })
 
-const onDeleteSuccess = (detail) => ({
-  type: CollegeActionTypes.DELETE_SUCCESS,
+const onUpdateSubjectPointSuccess = (detail) => ({
+  type: CollegeActionTypes.UPDATE_SUBJECT_POINT_SUCCESS,
   payload: detail,
 })
 
-const onDeleteError = (error) => ({
-  type: CollegeActionTypes.DELETE_ERROR,
+const onUpdateSubjectPointError = (error) => ({
+  type: CollegeActionTypes.UPDATE_SUBJECT_POINT_ERROR,
   payload: error,
 })
 
@@ -137,9 +136,9 @@ const CollegeActions = {
   onUpdateSuccess,
   onUpdateError,
 
-  onDelete,
-  onDeleteSuccess,
-  onDeleteError,
+  onUpdateSubjectPoint,
+  onUpdateSubjectPointSuccess,
+  onUpdateSubjectPointError,
 }
 
 export default CollegeActions

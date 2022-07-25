@@ -17,6 +17,7 @@ import {
   CRow,
 } from '@coreui/react'
 import CollegeActions from '../../redux/actions/college'
+import MajorActions from '../../redux/actions/major'
 import Pagination from 'react-js-pagination'
 import getFilterParams from '../../util/getFilterParams'
 import qs from 'query-string'
@@ -32,6 +33,7 @@ function List(props) {
   const location = useLocation()
   const dispatch = useDispatch()
   const colleges = useSelector((state) => state.college.list || [])
+  const majors = useSelector((state) => state.major.list || [])
   const total = useSelector((state) => state.college.total || 0)
   const detail = useSelector((state) => state.college.detail || null)
 
@@ -47,6 +49,10 @@ function List(props) {
     }
     setFilter(params)
     dispatch(CollegeActions.onGetList(params))
+    dispatch(MajorActions.onGetList({
+      PageNumber: 1,
+      PageSize: 100,
+    }))
   }
 
   // phân trang

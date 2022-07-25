@@ -15,3 +15,28 @@ $enable-rtl: true;
 
 // If you want to add custom CSS you can put it here.
 @import "custom";
+
+.img-thumbnail3 {
+  position: relative;
+}
+.img-thumbnail3 img{
+  height: 100%;
+  width: auto;
+}
+.img-thumbnail3 .file {
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  border: none;
+  bottom: 50px;
+  left: 0;
+  border-radius: 0;
+  font-size: 1vw;
+  background: #212529b8;
+}
+.img-thumbnail3 .file input {
+  position: absolute;
+  opacity: 0;
+  right: 0;
+  top: 0;
+}

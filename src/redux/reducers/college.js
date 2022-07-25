@@ -46,7 +46,7 @@ export default function (state = init, action) {
       }
     case CollegeActionTypes.CREATE:
     case CollegeActionTypes.UPDATE:
-    case CollegeActionTypes.DELETE:
+    case CollegeActionTypes.UPDATE_SUBJECT_POINT:
       return {
         ...state,
         processing: true,
@@ -55,7 +55,7 @@ export default function (state = init, action) {
     case CollegeActionTypes.GET_DETAIL_ERROR:
     case CollegeActionTypes.CREATE_ERROR:
     case CollegeActionTypes.UPDATE_ERROR:
-    case CollegeActionTypes.DELETE_ERROR:
+    case CollegeActionTypes.UPDATE_SUBJECT_POINT_ERROR:
       var { message } = action.payload
       toastError(message)
       return {
@@ -63,6 +63,7 @@ export default function (state = init, action) {
         processing: false,
       }
     case CollegeActionTypes.UPDATE_SUCCESS:
+    case CollegeActionTypes.UPDATE_SUBJECT_POINT_SUCCESS:
       toastSuccess('Cập nhật thành công')
       return {
         ...state,
