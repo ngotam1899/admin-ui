@@ -49,10 +49,12 @@ function List(props) {
     }
     setFilter(params)
     dispatch(CollegeActions.onGetList(params))
-    dispatch(MajorActions.onGetList({
-      PageNumber: 1,
-      PageSize: 100,
-    }))
+    dispatch(
+      MajorActions.onGetList({
+        PageNumber: 1,
+        PageSize: 200,
+      }),
+    )
   }
 
   // phân trang
@@ -91,11 +93,7 @@ function List(props) {
                 <p className="float-left my-2 mr-3 font-italic">
                   Có tất cả {total} kết quả tìm kiếm
                 </p>
-                <CButton
-                  onClick={() => setLarge(!large)}
-                  className="float-right"
-                  color="success"
-                >
+                <CButton onClick={() => setLarge(!large)} className="float-right" color="success">
                   Add a College
                 </CButton>
               </div>
@@ -119,7 +117,9 @@ function List(props) {
                       <CTableRow key={item.collegeId}>
                         <CTableHeaderCell scope="row">{item.collegeId}</CTableHeaderCell>
                         <CTableDataCell>{item.collegeName}</CTableDataCell>
-                        <CTableDataCell><img style={{width:'5vw'}} src={item.imagePath} alt="" /></CTableDataCell>
+                        <CTableDataCell>
+                          <img style={{ width: '5vw' }} src={item.imagePath} alt="" />
+                        </CTableDataCell>
                         <CTableDataCell>{item.referenceLink}</CTableDataCell>
                         <CTableDataCell>
                           <CButton
@@ -146,6 +146,7 @@ function List(props) {
               <Detail
                 large={large}
                 detail={detail}
+                majors={majors}
                 onClose={onClose}
                 onClearDetail={CollegeActions.onClearDetail}
                 filter={filter}
@@ -155,6 +156,7 @@ function List(props) {
               <Detail
                 large={large}
                 onClose={onClose}
+                majors={majors}
                 onClearDetail={CollegeActions.onClearDetail}
                 filter={filter}
               />

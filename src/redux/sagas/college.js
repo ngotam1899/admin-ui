@@ -6,7 +6,9 @@ import {
   getDetailCollege,
   addCollege,
   updateCollege,
-  updateSubjectPoint
+  updateSubjectPoint,
+  addMajor,
+  removeMajor
 } from '../apis/college'
 
 function* handleGetList({ payload }) {
@@ -76,6 +78,34 @@ function* handleCreate({ payload }) {
 
 /**
  *
+ * add major
+ */
+ function* handleAddMajor({ payload }) {
+  try {
+    const result = yield call(addMajor, payload.college_id, payload.majorId)
+    yield put(CollegeActions.onAddMajorSuccess(result))
+    yield put(CollegeActions.onGetDetail(payload.college_id))
+  } catch (error) {
+    yield put(CollegeActions.onAddMajorError(error))
+  }
+}
+
+/**
+ *
+ * remove major
+ */
+ function* handleRemoveMajor({ payload }) {
+  try {
+    const result = yield call(removeMajor, payload.college_id, payload.majorId)
+    yield put(CollegeActions.onRemoveMajorSuccess(result))
+    yield put(CollegeActions.onGetDetail(payload.college_id))
+  } catch (error) {
+    yield put(CollegeActions.onRemoveMajorError(error))
+  }
+}
+
+/**
+ *
  */
 
 export function* watchGetList() {
@@ -93,6 +123,12 @@ export function* watchUpdate() {
 export function* watchUpdateSubjectPoint() {
   yield takeEvery(CollegeActionTypes.UPDATE_SUBJECT_POINT, handleUpdateSubjectPoint)
 }
+export function* watchAddMajor() {
+  yield takeEvery(CollegeActionTypes.ADD_MAJOR, handleAddMajor)
+}
+export function* watchRemoveMajor() {
+  yield takeEvery(CollegeActionTypes.REMOVE_MAJOR, handleRemoveMajor)
+}
 
 export default function* rootSaga() {
   yield all([
@@ -101,5 +137,7 @@ export default function* rootSaga() {
     fork(watchCreate),
     fork(watchUpdate),
     fork(watchUpdateSubjectPoint),
+    fork(watchAddMajor),
+    fork(watchRemoveMajor),
   ])
 }

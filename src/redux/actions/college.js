@@ -19,6 +19,14 @@ export const CollegeActionTypes = {
   UPDATE_SUBJECT_POINT_SUCCESS: 'UPDATE_SUBJECT_POINT_SUCCESS',
   UPDATE_SUBJECT_POINT_ERROR: 'UPDATE_SUBJECT_POINT_ERROR',
 
+  ADD_MAJOR: 'ADD_MAJOR',
+  ADD_MAJOR_SUCCESS: 'ADD_MAJOR_SUCCESS',
+  ADD_MAJOR_ERROR: 'ADD_MAJOR_ERROR',
+
+  REMOVE_MAJOR: 'REMOVE_MAJOR',
+  REMOVE_MAJOR_SUCCESS: 'REMOVE_MAJOR_SUCCESS',
+  REMOVE_MAJOR_ERROR: 'REMOVE_MAJOR_ERROR',
+
   CLEAR_DETAIL: 'CLEAR_DETAIL',
   CLEAR_STATE: 'CLEAR_STATE',
 }
@@ -116,6 +124,44 @@ const onUpdateSubjectPointError = (error) => ({
   payload: error,
 })
 
+/**
+ *
+ * add major
+ */
+ const onAddMajor = (payload) => ({
+  type: CollegeActionTypes.ADD_MAJOR,
+  payload
+})
+
+const onAddMajorSuccess = (detail) => ({
+  type: CollegeActionTypes.ADD_MAJOR_SUCCESS,
+  payload: detail,
+})
+
+const onAddMajorError = (error) => ({
+  type: CollegeActionTypes.ADD_MAJOR_ERROR,
+  payload: error,
+})
+
+/**
+ *
+ * remove major
+ */
+ const onRemoveMajor = (payload) => ({
+  type: CollegeActionTypes.REMOVE_MAJOR,
+  payload
+})
+
+const onRemoveMajorSuccess = (detail) => ({
+  type: CollegeActionTypes.REMOVE_MAJOR_SUCCESS,
+  payload: detail,
+})
+
+const onRemoveMajorError = (error) => ({
+  type: CollegeActionTypes.REMOVE_MAJOR_ERROR,
+  payload: error,
+})
+
 const CollegeActions = {
   onGetList,
   onGetListSuccess,
@@ -139,6 +185,14 @@ const CollegeActions = {
   onUpdateSubjectPoint,
   onUpdateSubjectPointSuccess,
   onUpdateSubjectPointError,
+
+  onAddMajor,
+  onAddMajorSuccess,
+  onAddMajorError,
+
+  onRemoveMajor,
+  onRemoveMajorSuccess,
+  onRemoveMajorError,
 }
 
 export default CollegeActions

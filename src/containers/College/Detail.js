@@ -12,7 +12,6 @@ import {
   CForm,
   CFormLabel,
   CFormInput,
-  CFormTextarea,
   CTable,
   CTableHead,
   CTableRow,
@@ -24,13 +23,14 @@ import CollegeActions from '../../redux/actions/college'
 import { INITIAL_IMAGE } from '../../constants'
 
 function Detail(props) {
-  const { large, detail, onClose, onClearDetail, filter } = props
+  const { large, detail, onClose, onClearDetail, filter, majors } = props
   const noImage = INITIAL_IMAGE
   const [inputField, setInputField] = useState({})
   const [previewSource, setPreviewSource] = useState('')
   const [sumPoint, setSumPoint] = useState(0)
   const [editting, setEditting] = useState('')
-  const [keywork, setKeywork] = useState('')
+  const [searchKeywork, setSearchKeywork] = useState('')
+  const [searchResult, setSearchResult] = useState([])
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -43,24 +43,38 @@ function Detail(props) {
     })
   }, [detail])
 
+  useEffect(() => {
+    setSearchResult(majors.filter((item) => item.majorName.toLowerCase().indexOf(searchKeywork.toLowerCase()) > -1).slice(0, 5))
+  }, [searchKeywork])
+
   const inputsHandler = (e) => {
     setInputField({ ...inputField, [e.target.name]: e.target.value })
   }
 
+  const inputsKeyword = (e) => {
+    setSearchKeywork(e.target.value)
+  }
+
   const onSubmit = (large) => {
     onClose(large)
-    if(detail) {
+    if (detail) {
       dispatch(
         CollegeActions.onUpdate({
-          data: { ...inputField, imagePath : previewSource !== '' ? previewSource : inputField.imagePath, collegeId: detail.collegeId },
+          data: {
+            ...inputField,
+            imagePath: previewSource !== '' ? previewSource : inputField.imagePath,
+            collegeId: detail.collegeId,
+          },
           params: filter,
         }),
       )
-    }
-    else {
+    } else {
       dispatch(
         CollegeActions.onCreate({
-          data: { ...inputField, imagePath : previewSource !== '' ? previewSource : inputField.imagePath },
+          data: {
+            ...inputField,
+            imagePath: previewSource !== '' ? previewSource : inputField.imagePath,
+          },
           params: filter,
         }),
       )
@@ -68,24 +82,34 @@ function Detail(props) {
   }
 
   const handleFileInputChange = (e) => {
-    const file = e.target.files[0];
-    previewFile(file);
+    const file = e.target.files[0]
+    previewFile(file)
   }
 
   const previewFile = (file) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
     reader.onloadend = () => {
       setPreviewSource(reader.result)
-    };
-  };
+    }
+  }
 
   const onUpdatePoint = (subjectGroupId, majorId) => {
     setEditting('')
-    dispatch(CollegeActions.onUpdateSubjectPoint({
-      data: { subjectGroupId, majorId, collegesId: detail.collegeId, sum: +sumPoint },
-      college_id: detail.collegeId
-    }))
+    dispatch(
+      CollegeActions.onUpdateSubjectPoint({
+        data: { subjectGroupId, majorId, collegesId: detail.collegeId, sum: +sumPoint },
+        college_id: detail.collegeId,
+      }),
+    )
+  }
+
+  const onAddMajor = (majorId) => {
+    dispatch(CollegeActions.onAddMajor({college_id: detail.collegeId, majorId}))
+  }
+
+  const onRemoveMajor = (majorId) => {
+    dispatch(CollegeActions.onRemoveMajor({college_id: detail.collegeId, majorId}))
   }
 
   return (
@@ -135,112 +159,153 @@ function Detail(props) {
           </div>
           <div className="col-3">
             <div className="mb-2">
-            <label>Ảnh quảng cáo:</label>
-                {inputField.imagePath ? <div className="form-group img-thumbnail3">
-                {
-                  previewSource ? (
-                    <img src={previewSource} className="w-100" alt=""/>
-                  )
-                  : <img src={inputField.imagePath || noImage} style={{ border: '1px solid', width: '100%' }} alt=""/>
-                }
-                <div className="file btn btn-lg btn-primary">
-                  Change Photo
-                  <input type="file" name="image" id="fileInput"
-                  onChange={handleFileInputChange} style={{width: '100%'}}/>
+              <CFormLabel htmlFor="image">Image</CFormLabel>
+              {inputField.imagePath ? (
+                <div className="form-group img-thumbnail">
+                  {previewSource ? (
+                    <img src={previewSource} className="w-100" alt="" />
+                  ) : (
+                    <img
+                      src={inputField.imagePath || noImage}
+                      style={{ width: '100%' }}
+                      alt=""
+                    />
+                  )}
+                  <div className="file btn btn-lg btn-primary">
+                    Change Photo
+                    <input
+                      type="file"
+                      name="image"
+                      id="fileInput"
+                      onChange={handleFileInputChange}
+                      style={{ width: '100%' }}
+                    />
+                  </div>
                 </div>
-              </div>
-              : <div className="form-group img-thumbnail3">
-                {
-                  previewSource ? (
-                    <img src={previewSource} className="w-100" alt=""/>
-                  )
-                  : <img src={noImage} alt="" style={{ border: '1px solid', width: '100%' }}></img>
-                }
-                <div className="file btn btn-lg btn-primary">
-                  Change Photo
-                  <input type="file" name="image" id="fileInput"
-                    onChange={handleFileInputChange} style={{width: '100%'}}/>
+              ) : (
+                <div className="form-group img-thumbnail">
+                  {previewSource ? (
+                    <img src={previewSource} className="w-100" alt="" />
+                  ) : (
+                    <img src={noImage} alt="" style={{ width: '100%' }}></img>
+                  )}
+                  <div className="file btn btn-lg btn-primary">
+                    Change Photo
+                    <input
+                      type="file"
+                      name="image"
+                      id="fileInput"
+                      onChange={handleFileInputChange}
+                      style={{ width: '100%' }}
+                    />
+                  </div>
                 </div>
-              </div>}
+              )}
             </div>
           </div>
           <div className="col-12">
             <div className="card text-white mb-3">
-              <div className="card-header bg-primary">
-                Majors
-              </div>
+              <div className="card-header bg-primary">Majors</div>
               <div className="card-body text-dark">
                 <div className="row">
                   <div className="col-12">
-                  <CFormInput
-                    type="text"
-                    id="keywork"
-                    name="keywork"
-                    className="mb-2"
-                    value={keywork || ''}
-                    onChange={inputsHandler}
-                  />
-
-                  <CListGroup>
-                  {inputField.major && inputField.major.map((item, index) => {
-                    return (<CListGroupItem key={index}>
-                    <div className="d-flex w-100 justify-content-between">
-                      <h5 className="mb-1">{item.name}</h5>
-                      <CButton
-                        onClick={() => onUpdatePoint(!large, sub.id)}
-                        className="mr-1 mb-1 mb-xl-0 text-white"
-                        color="danger"
-                      >
-                        Delete major
-                      </CButton>
+                    <div className="search-input">
+                      <CFormInput
+                        type="text"
+                        id="searchKeywork"
+                        name="searchKeywork"
+                        className="mb-2"
+                        value={searchKeywork || ''}
+                        onChange={inputsKeyword}
+                      />
+                      
+                        <CListGroup>
+                          {searchKeywork.length > 0 && searchResult.length > 0 && searchResult.map((item) => <CListGroupItem key={item.majorId}>{item.majorName}<CButton
+                            onClick={() => onAddMajor(item.majorId)}
+                            className="mr-1 mb-1 mb-xl-0 float-right"
+                            color="success"
+                          >
+                            Add
+                          </CButton></CListGroupItem>)}
+                          
+                      </CListGroup>
                     </div>
-                    <CTable responsive="xxl">
-                      <CTableHead>
-                        <CTableRow>
-                          <CTableHeaderCell scope="col">ID</CTableHeaderCell>
-                          <CTableHeaderCell scope="col">Name</CTableHeaderCell>
-                          <CTableHeaderCell scope="col">Point</CTableHeaderCell>
-                          <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
-                        </CTableRow>
-                      </CTableHead>
-                      <CTableBody>
-                        {item.subjectGroup.length > 0 &&
-                          item.subjectGroup.map((sub) => {
-                            return (
-                              <CTableRow key={sub.id}>
-                                <CTableHeaderCell scope="row">{sub.id}</CTableHeaderCell>
-                                <CTableDataCell>{sub.name}</CTableDataCell>
-                                <CTableDataCell>{editting !== sub.id ? sub.sumPoint : <CFormInput
-                                  type="number"
-                                  id="sumPoint"
-                                  name="sumPoint"
-                                  value={sumPoint}
-                                  onChange={(e) => setSumPoint(e.target.value)}
-                                />}</CTableDataCell>
-                                <CTableDataCell>
-                                  {editting !== sub.id ? <CButton
-                                    onClick={() => {setEditting(sub.id); setSumPoint(sub.sumPoint)}}
-                                    className="mr-1 mb-1 mb-xl-0"
-                                    color="warning"
-                                  >
-                                    Edit
-                                  </CButton> :
-                                  <CButton
-                                    onClick={() => onUpdatePoint(sub.id, item.id)}
-                                    className="mr-1 mb-1 mb-xl-0"
-                                    color="primary"
-                                  >
-                                    Save change
-                                  </CButton>}
-                                </CTableDataCell>
-                              </CTableRow>
-                            )
-                          })}
-                      </CTableBody>
-                    </CTable>
-                  </CListGroupItem>)
-                  })}
-                  </CListGroup>
+
+                    <CListGroup>
+                      {inputField.major &&
+                        inputField.major.map((item, index) => {
+                          return (
+                            <CListGroupItem key={index}>
+                              <div className="d-flex w-100 justify-content-between">
+                                <h5 className="mb-1">{item.name}</h5>
+                                <CButton
+                                  onClick={() => onRemoveMajor(item.id)}
+                                  className="mr-1 mb-1 mb-xl-0 text-white"
+                                  color="danger"
+                                >
+                                  Delete major
+                                </CButton>
+                              </div>
+                              <CTable responsive="xxl">
+                                <CTableHead>
+                                  <CTableRow>
+                                    <CTableHeaderCell scope="col">ID</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col">Name</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col">Point</CTableHeaderCell>
+                                    <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
+                                  </CTableRow>
+                                </CTableHead>
+                                <CTableBody>
+                                  {item.subjectGroup.length > 0 &&
+                                    item.subjectGroup.map((sub) => {
+                                      return (
+                                        <CTableRow key={sub.id}>
+                                          <CTableHeaderCell scope="row">{sub.id}</CTableHeaderCell>
+                                          <CTableDataCell>{sub.name}</CTableDataCell>
+                                          <CTableDataCell>
+                                            {editting !== sub.id ? (
+                                              sub.sumPoint
+                                            ) : (
+                                              <CFormInput
+                                                type="number"
+                                                id="sumPoint"
+                                                name="sumPoint"
+                                                value={sumPoint}
+                                                onChange={(e) => setSumPoint(e.target.value)}
+                                              />
+                                            )}
+                                          </CTableDataCell>
+                                          <CTableDataCell>
+                                            {editting !== sub.id ? (
+                                              <CButton
+                                                onClick={() => {
+                                                  setEditting(sub.id)
+                                                  setSumPoint(sub.sumPoint)
+                                                }}
+                                                className="mr-1 mb-1 mb-xl-0"
+                                                color="warning"
+                                              >
+                                                Edit
+                                              </CButton>
+                                            ) : (
+                                              <CButton
+                                                onClick={() => onUpdatePoint(sub.id, item.id)}
+                                                className="mr-1 mb-1 mb-xl-0"
+                                                color="primary"
+                                              >
+                                                Save change
+                                              </CButton>
+                                            )}
+                                          </CTableDataCell>
+                                        </CTableRow>
+                                      )
+                                    })}
+                                </CTableBody>
+                              </CTable>
+                            </CListGroupItem>
+                          )
+                        })}
+                    </CListGroup>
                   </div>
                 </div>
               </div>

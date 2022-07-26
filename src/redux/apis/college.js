@@ -34,3 +34,13 @@ export const updateCollege = (data) => {
 export const updateSubjectPoint = (data) => {
   return axiosService.put(`${ENDPOINT}${url}/Point`, data)
 }
+
+// https://release-mto.herokuapp.com/api/colleges/:colleges_id/major/:majorId  METHOD = POST
+export const addMajor = (colleges_id, majorId) => {
+  return axiosService.post(`${ENDPOINT}${url}/${colleges_id}/major/${majorId}`)
+}
+
+// https://release-mto.herokuapp.com/api/colleges/:colleges_id/major/:majorId  METHOD = DELETE
+export const removeMajor = (colleges_id, majorId) => {
+  return axiosService.delete(`${ENDPOINT}${url}/${colleges_id}/major/${majorId}`)
+}
