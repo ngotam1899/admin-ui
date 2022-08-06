@@ -80,14 +80,13 @@ function List(props) {
         <CCard>
           <CCardHeader>
             <div className="row">
-              <div className="col-6">
+              <div className="col-12">
                 <h5 className="my-2">List of Personality Group</h5>
                 <p className="float-left my-2 mr-3 font-italic">
                   Có tất cả {total} kết quả tìm kiếm
                 </p>
                 <CButton
                   onClick={() => setLarge(!large)}
-                  className="float-right"
                   color="success"
                   disabled
                 >

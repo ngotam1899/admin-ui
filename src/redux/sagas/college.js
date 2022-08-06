@@ -8,7 +8,8 @@ import {
   updateCollege,
   updateSubjectPoint,
   addMajor,
-  removeMajor
+  removeMajor,
+  statisticCollege
 } from '../apis/college'
 
 function* handleGetList({ payload }) {
@@ -106,6 +107,20 @@ function* handleCreate({ payload }) {
 
 /**
  *
+ * statistic
+ */
+function* handleStatistic({ payload }) {
+  try {
+    const result = yield call(statisticCollege, payload)
+    const data = get(result, 'data')
+    yield put(CollegeActions.onStatisticSuccess(data.data))
+  } catch (error) {
+    yield put(CollegeActions.onStatisticError(error))
+  }
+}
+
+/**
+ *
  */
 
 export function* watchGetList() {
@@ -129,6 +144,9 @@ export function* watchAddMajor() {
 export function* watchRemoveMajor() {
   yield takeEvery(CollegeActionTypes.REMOVE_MAJOR, handleRemoveMajor)
 }
+export function* watchStatistic() {
+  yield takeEvery(CollegeActionTypes.STATISTIC, handleStatistic)
+}
 
 export default function* rootSaga() {
   yield all([
@@ -139,5 +157,6 @@ export default function* rootSaga() {
     fork(watchUpdateSubjectPoint),
     fork(watchAddMajor),
     fork(watchRemoveMajor),
+    fork(watchStatistic),
   ])
 }

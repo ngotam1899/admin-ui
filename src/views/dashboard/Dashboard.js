@@ -21,27 +21,65 @@ import {
 import { CChart } from '@coreui/react-chartjs'
 import { useDispatch, useSelector } from 'react-redux'
 import TestActions from '../../redux/actions/test'
+import MajorActions from '../../redux/actions/major'
+import CollegeActions from '../../redux/actions/college'
 
 const Dashboard = () => {
   const dispatch = useDispatch()
   const pgs = useSelector((state) => state.test.pg || [])
-  const [labels, setLabels] = useState([])
-  const [data, setData] = useState([])
+  const majorStatistic = useSelector((state) => state.major.statistic || [])
+  const collegeStatistic = useSelector((state) => state.college.statistic || [])
+  const [labelsPG, setLabelsPG] = useState([])
+  const [dataPG, setDataPG] = useState([])
+  const [labelsMajor, setLabelsMajor] = useState([])
+  const [dataMajor, setDataMajor] = useState([])
+  const [labelsCollege, setLabelsCollege] = useState([])
+  const [dataCollege, setDataCollege] = useState([])
 
   useEffect(() => {
     dispatch(TestActions.onStatisticPG())
+    dispatch(MajorActions.onStatistic({
+      PageNumber: 1,
+      PageSize: 30,
+    }))
+    dispatch(CollegeActions.onStatistic({
+      PageNumber: 1,
+      PageSize: 30,
+    }))
   }, [])
 
   useEffect(() => {
-    let labels = []
-    let data = []
+    let labelsPG = []
+    let dataPG = []
     pgs.map((item) => {
-      labels.push(item.groupName)
-      data.push(item.avgPoint.toFixed(2))
+      labelsPG.push(item.groupName)
+      dataPG.push(item.avgPoint.toFixed(2))
     })
-    setLabels(labels)
-    setData(data)
+    setLabelsPG(labelsPG)
+    setDataPG(dataPG)
   }, [pgs])
+
+  useEffect(() => {
+    let labelsMajor = []
+    let dataMajor = []
+    majorStatistic.map((item) => {
+      labelsMajor.push(item.majorName)
+      dataMajor.push(item.selectedUser)
+    })
+    setLabelsMajor(labelsMajor)
+    setDataMajor(dataMajor)
+  }, [majorStatistic])
+
+  useEffect(() => {
+    let labelsCollege = []
+    let dataCollege = []
+    collegeStatistic.map((item) => {
+      labelsCollege.push(item.collegeName)
+      dataCollege.push(item.numOfUser)
+    })
+    setLabelsCollege(labelsCollege)
+    setDataCollege(dataCollege)
+  }, [collegeStatistic])
 
   return (
     <>
@@ -54,12 +92,52 @@ const Dashboard = () => {
                 <CChart
                   type="bar"
                   data={{
-                    labels,
+                    labels: labelsPG,
                     datasets: [
                       {
                         label: 'Average Point',
                         backgroundColor: '#f87979',
-                        data,
+                        data: dataPG,
+                      },
+                    ],
+                  }}
+                />
+              )}
+            </CCardBody>
+          </CCard>
+          <CCard className="mb-4">
+            <CCardHeader>Statistic Major</CCardHeader>
+            <CCardBody>
+              {majorStatistic && (
+                <CChart
+                  type="bar"
+                  data={{
+                    labels: labelsMajor,
+                    datasets: [
+                      {
+                        label: 'Selected User',
+                        backgroundColor: '#FCB415',
+                        data: dataMajor,
+                      },
+                    ],
+                  }}
+                />
+              )}
+            </CCardBody>
+          </CCard>
+          <CCard className="mb-4">
+            <CCardHeader>Statistic College</CCardHeader>
+            <CCardBody>
+              {pgs && (
+                <CChart
+                  type="bar"
+                  data={{
+                    labels: labelsCollege,
+                    datasets: [
+                      {
+                        label: 'Number of User',
+                        backgroundColor: '#41B34E',
+                        data: dataCollege,
                       },
                     ],
                   }}

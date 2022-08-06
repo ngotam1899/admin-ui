@@ -44,3 +44,12 @@ export const addMajor = (colleges_id, majorId) => {
 export const removeMajor = (colleges_id, majorId) => {
   return axiosService.delete(`${ENDPOINT}${url}/${colleges_id}/major/${majorId}`)
 }
+
+// https://release-mto.herokuapp.com/api/majors/statistic  METHOD = GET
+export const statisticCollege = (params = {}) => {
+  let queryParams = ''
+  if (Object.keys(params).length > 0) {
+    queryParams = `?${queryString.stringify(params)}`
+  }
+  return axiosService.get(`${ENDPOINT}${url}/statistic${queryParams}`)
+}

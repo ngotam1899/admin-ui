@@ -14,3 +14,12 @@ export const getAllMajor = (params = {}) => {
   }
   return axiosService.get(`${ENDPOINT}${url}${queryParams}`)
 }
+
+// https://release-mto.herokuapp.com/api/majors/statistic  METHOD = GET
+export const statisticMajor = (params = {}) => {
+  let queryParams = ''
+  if (Object.keys(params).length > 0) {
+    queryParams = `?${queryString.stringify(params)}`
+  }
+  return axiosService.get(`${ENDPOINT}${url}/statistic${queryParams}`)
+}

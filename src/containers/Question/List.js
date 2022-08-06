@@ -116,7 +116,7 @@ function List(props) {
         <CCard>
           <CCardHeader>
             <div className="row">
-              <div className="col-6">
+              <div className="col-12">
                 <h5 className="my-2">List of Question</h5>
                 <CNav variant="pills" role="tablist">
                   {type &&
@@ -142,7 +142,6 @@ function List(props) {
                 </p>
                 <CButton
                   onClick={() => setLarge(!large)}
-                  className="float-right"
                   color="success"
                 >
                   Add a Question

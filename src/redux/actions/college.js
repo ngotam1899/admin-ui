@@ -27,6 +27,10 @@ export const CollegeActionTypes = {
   REMOVE_MAJOR_SUCCESS: 'REMOVE_MAJOR_SUCCESS',
   REMOVE_MAJOR_ERROR: 'REMOVE_MAJOR_ERROR',
 
+  STATISTIC: 'STATISTIC',
+  STATISTIC_SUCCESS: 'STATISTIC_SUCCESS',
+  STATISTIC_ERROR: 'STATISTIC_ERROR',
+
   CLEAR_DETAIL: 'CLEAR_DETAIL',
   CLEAR_STATE: 'CLEAR_STATE',
 }
@@ -162,6 +166,26 @@ const onRemoveMajorError = (error) => ({
   payload: error,
 })
 
+/**
+ *
+ * statistic personality group
+ */
+
+const onStatistic = (payload) => ({
+  type: CollegeActionTypes.STATISTIC,
+  payload
+})
+
+const onStatisticSuccess = (payload) => ({
+  type: CollegeActionTypes.STATISTIC_SUCCESS,
+  payload,
+})
+
+const onStatisticError = (error) => ({
+  type: CollegeActionTypes.STATISTIC_ERROR,
+  payload: error,
+})
+
 const CollegeActions = {
   onGetList,
   onGetListSuccess,
@@ -193,6 +217,10 @@ const CollegeActions = {
   onRemoveMajor,
   onRemoveMajorSuccess,
   onRemoveMajorError,
+
+  onStatistic,
+  onStatisticSuccess,
+  onStatisticError,
 }
 
 export default CollegeActions

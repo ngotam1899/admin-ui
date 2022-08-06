@@ -60,6 +60,7 @@ export default function (state = init, action) {
     case CollegeActionTypes.UPDATE_SUBJECT_POINT_ERROR:
     case CollegeActionTypes.ADD_MAJOR_ERROR:
     case CollegeActionTypes.REMOVE_MAJOR_ERROR:
+    case CollegeActionTypes.STATISTIC_ERROR:
       var { message } = action.payload
       toastError(message)
       return {
@@ -86,6 +87,18 @@ export default function (state = init, action) {
       return {
         ...state,
         processing: false,
+      }
+    case CollegeActionTypes.STATISTIC:
+      return {
+        ...state,
+        loading: true,
+        statistic: [],
+      }
+    case CollegeActionTypes.STATISTIC_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        statistic: get(action, 'payload', []),
       }
     default:
       return state
