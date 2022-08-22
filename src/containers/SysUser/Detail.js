@@ -46,7 +46,7 @@ function Detail(props) {
   return (
     <CModal visible={large} onClose={() => onClose(!large)} size="lg">
       <CModalHeader closeButton>
-        <CModalTitle>{detail ? 'Edit system user infomation' : 'Add new system user'}</CModalTitle>
+        <CModalTitle>{detail ? 'System user infomation' : 'Add new system user'}</CModalTitle>
       </CModalHeader>
       <CModalBody>
         <div className="row">
