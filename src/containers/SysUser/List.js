@@ -63,17 +63,10 @@ function List(props) {
           <CCardHeader>
             <div className="row">
               <div className="col-12">
-                <h5 className="my-2">List of Personality Group</h5>
+                <h5 className="my-2">List of System User</h5>
                 <p className="float-left my-2 mr-3 font-italic">
                   Có tất cả {user.length} kết quả tìm kiếm
                 </p>
-                <CButton
-                  onClick={() => setLarge(!large)}
-                  color="success"
-                  disabled
-                >
-                  Add a Personality Group
-                </CButton>
               </div>
             </div>
           </CCardHeader>
@@ -120,7 +113,7 @@ function List(props) {
                             className="mr-1 mb-1 mb-xl-0"
                             color="warning"
                           >
-                            Edit
+                            View
                           </CButton>{' '}
                           <CButton
                             onClick={() => onChangeStatus(item.userId, !item.isLocked)}

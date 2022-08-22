@@ -85,13 +85,6 @@ function List(props) {
                 <p className="float-left my-2 mr-3 font-italic">
                   Có tất cả {total} kết quả tìm kiếm
                 </p>
-                <CButton
-                  onClick={() => setLarge(!large)}
-                  color="success"
-                  disabled
-                >
-                  Add a Personality Group
-                </CButton>
               </div>
             </div>
           </CCardHeader>

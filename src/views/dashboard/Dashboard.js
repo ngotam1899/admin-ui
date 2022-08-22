@@ -84,7 +84,7 @@ const Dashboard = () => {
   return (
     <>
       <CRow>
-        <CCol xs>
+        <CCol xs={6}>
           <CCard className="mb-4">
             <CCardHeader>Statistic Personality Group</CCardHeader>
             <CCardBody>
@@ -105,6 +105,8 @@ const Dashboard = () => {
               )}
             </CCardBody>
           </CCard>
+        </CCol>
+        <CCol xs={6}>
           <CCard className="mb-4">
             <CCardHeader>Statistic Major</CCardHeader>
             <CCardBody>
@@ -125,6 +127,8 @@ const Dashboard = () => {
               )}
             </CCardBody>
           </CCard>
+        </CCol>
+        <CCol xs={6}>
           <CCard className="mb-4">
             <CCardHeader>Statistic College</CCardHeader>
             <CCardBody>
