@@ -3,7 +3,8 @@ import { get } from 'lodash'
 import MajorActions, { MajorActionTypes } from '../actions/major'
 import {
   getAllMajor,
-  statisticMajor
+  statisticMajor,
+  addMajor
 } from '../apis/major'
 
 function* handleGetList({ payload }) {
@@ -13,6 +14,21 @@ function* handleGetList({ payload }) {
     yield put(MajorActions.onGetListSuccess(data.data, data.count))
   } catch (error) {
     yield put(MajorActions.onGetListError(error))
+  }
+}
+
+/**
+ *
+ * create
+ */
+ function* handleCreate({ payload }) {
+  try {
+    const result = yield call(addMajor, payload.data)
+    const data = get(result, 'data', {})
+    yield put(MajorActions.onCreateSuccess(data))
+    yield put(MajorActions.onGetList(payload.params))
+  } catch (error) {
+    yield put(MajorActions.onCreateError(error))
   }
 }
 
@@ -40,8 +56,10 @@ export function* watchGetList() {
 export function* watchStatistic() {
   yield takeEvery(MajorActionTypes.STATISTIC, handleStatistic)
 }
-
+export function* watchCreate() {
+  yield takeEvery(MajorActionTypes.CREATE, handleCreate)
+}
 
 export default function* rootSaga() {
-  yield all([fork(watchGetList), fork(watchStatistic)])
+  yield all([fork(watchGetList), fork(watchStatistic), fork(watchCreate)])
 }

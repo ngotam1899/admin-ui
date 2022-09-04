@@ -11,6 +11,7 @@ const init = {
 export default function (state = init, action) {
   switch (action.type) {
     case MajorActionTypes.GET_LIST:
+    case MajorActionTypes.CREATE:
       return {
         ...state,
         loading: true,
@@ -24,6 +25,7 @@ export default function (state = init, action) {
       }
     case MajorActionTypes.STATISTIC_ERROR:
     case MajorActionTypes.GET_LIST_ERROR:
+    case MajorActionTypes.CREATE_ERROR:
       var { message } = action.payload
       toastError(message)
       return {
@@ -41,6 +43,12 @@ export default function (state = init, action) {
         ...state,
         loading: false,
         statistic: get(action, 'payload', []),
+      }
+    case MajorActionTypes.CREATE_SUCCESS:
+      toastSuccess('Thêm thành công')
+      return {
+        ...state,
+        processing: true,
       }
     default:
       return state

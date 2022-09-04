@@ -33,6 +33,7 @@ function Detail(props) {
   const [searchResult, setSearchResult] = useState([])
   const dispatch = useDispatch()
 
+  useEffect(() => () => onClearDetail(), [])
   useEffect(() => {
     setInputField({
       collegeName: detail && detail.collegeName,
@@ -218,7 +219,7 @@ function Detail(props) {
                         value={searchKeywork || ''}
                         onChange={inputsKeyword}
                       />
-                      
+
                         <CListGroup>
                           {searchKeywork.length > 0 && searchResult.length > 0 && searchResult.map((item) => <CListGroupItem key={item.majorId}>{item.majorName}<CButton
                             onClick={() => onAddMajor(item.majorId)}
@@ -227,7 +228,7 @@ function Detail(props) {
                           >
                             Add
                           </CButton></CListGroupItem>)}
-                          
+
                       </CListGroup>
                     </div>
 

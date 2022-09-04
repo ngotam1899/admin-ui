@@ -47,6 +47,11 @@ const onClearState = () => ({
   type: CollegeActionTypes.CLEAR_STATE,
 })
 
+/**
+ *
+ * get list
+ */
+
 const onGetList = (payload) => ({
   type: CollegeActionTypes.GET_LIST,
   payload,
@@ -62,6 +67,11 @@ const onGetListError = (error) => ({
   payload: error,
 })
 
+/**
+ *
+ * get detail
+ */
+
 const onGetDetail = (payload) => ({
   type: CollegeActionTypes.GET_DETAIL,
   payload,
@@ -74,6 +84,11 @@ const onGetDetailError = (error) => ({
   type: CollegeActionTypes.GET_DETAIL_ERROR,
   payload: error,
 })
+
+/**
+ *
+ * create
+ */
 
 const onCreate = (payload) => ({
   type: CollegeActionTypes.CREATE,

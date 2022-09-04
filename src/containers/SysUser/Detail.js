@@ -13,10 +13,13 @@ import {
   CFormSelect,
   CFormSwitch,
 } from '@coreui/react'
+import UserActions from '../../redux/actions/user'
+import { useDispatch, useSelector } from 'react-redux'
 
 function Detail(props) {
   const { large, detail, onClose, onClearDetail } = props
   const [inputField, setInputField] = useState({})
+  const dispatch = useDispatch()
 
   useEffect(() => () => onClearDetail(), [])
 
@@ -41,6 +44,28 @@ function Detail(props) {
 
   const inputsHandler = (e) => {
     setInputField({ ...inputField, [e.target.name]: e.target.value })
+  }
+
+  const onSubmit = () => {
+    let role_id = 0;
+    switch (inputField.roleName) {
+      case 'student':
+        role_id = 1;
+        break;
+      case 'admin':
+        role_id = 2;
+        break;
+      case 'connector':
+        role_id = 3;
+        break;
+      default:
+        role_id = 1;
+        break;
+    }
+    dispatch(UserActions.onUpdateRole({
+      account_id: detail.userId,
+      role_id
+    }))
   }
 
   return (
@@ -124,11 +149,11 @@ function Detail(props) {
                       id="roleName"
                       value={inputField.roleName}
                       onChange={inputsHandler}
-                      disabled
                     >
                       <option>Select the role</option>
                       <option value="student">Student</option>
                       <option value="admin">Admin</option>
+                      <option value="connector">Connector</option>
                     </CFormSelect>
                   </div>
                   <div className="mb-2">
@@ -198,6 +223,9 @@ function Detail(props) {
         </div>
       </CModalBody>
       <CModalFooter>
+        <CButton color="primary" onClick={() => onSubmit(!large)}>
+          Save
+        </CButton>{' '}
         <CButton color="secondary" onClick={() => onClose(!large)}>
           Cancel
         </CButton>

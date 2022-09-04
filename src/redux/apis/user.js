@@ -30,7 +30,7 @@ export const updateUser = (data) => {
   return axiosService.put(`${ENDPOINT}${url}`, data)
 }
 
-// https://release-mto.herokuapp.com/api/tests/:test_id  METHOD = DELETE
-export const deleteTest = (test_id) => {
-  return axiosService.delete(`${ENDPOINT}${url}/${test_id}`)
+// https://release-mto.herokuapp.com/api/sys_users/:account_id/role/:role_id  METHOD = PUT
+export const updateRoleUser = (account_id, role_id) => {
+  return axiosService.put(`${ENDPOINT}${url}/${account_id}/role/${role_id}`)
 }

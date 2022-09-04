@@ -15,9 +15,9 @@ export const UserActionTypes = {
   UPDATE_SUCCESS: 'UPDATE_SUCCESS',
   UPDATE_ERROR: 'UPDATE_ERROR',
 
-  DELETE: 'DELETE',
-  DELETE_SUCCESS: 'DELETE_SUCCESS',
-  DELETE_ERROR: 'DELETE_ERROR',
+  UPDATE_ROLE: 'UPDATE_ROLE',
+  UPDATE_ROLE_SUCCESS: 'UPDATE_ROLE_SUCCESS',
+  UPDATE_ROLE_ERROR: 'UPDATE_ROLE_ERROR',
 
   CLEAR_DETAIL: 'CLEAR_DETAIL',
   CLEAR_STATE: 'CLEAR_STATE',
@@ -99,21 +99,20 @@ const onUpdateError = (error) => ({
 
 /**
  *
- * delete
+ * update role
  */
-const onDelete = (id, params) => ({
-  type: UserActionTypes.DELETE,
-  id,
-  params,
+ const onUpdateRole = (payload) => ({
+  type: UserActionTypes.UPDATE_ROLE,
+  payload,
 })
 
-const onDeleteSuccess = (detail) => ({
-  type: UserActionTypes.DELETE_SUCCESS,
+const onUpdateRoleSuccess = (detail) => ({
+  type: UserActionTypes.UPDATE_ROLE_SUCCESS,
   payload: detail,
 })
 
-const onDeleteError = (error) => ({
-  type: UserActionTypes.DELETE_ERROR,
+const onUpdateRoleError = (error) => ({
+  type: UserActionTypes.UPDATE_ROLE_ERROR,
   payload: error,
 })
 
@@ -137,9 +136,9 @@ const UserActions = {
   onUpdateSuccess,
   onUpdateError,
 
-  onDelete,
-  onDeleteSuccess,
-  onDeleteError,
+  onUpdateRole,
+  onUpdateRoleSuccess,
+  onUpdateRoleError,
 }
 
 export default UserActions

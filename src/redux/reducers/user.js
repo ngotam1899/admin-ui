@@ -58,7 +58,7 @@ export default function (state = init, action) {
       }
     case UserActionTypes.CREATE:
     case UserActionTypes.UPDATE:
-    case UserActionTypes.DELETE:
+    case UserActionTypes.UPDATE_ROLE:
       return {
         ...state,
         processing: true,
@@ -68,7 +68,7 @@ export default function (state = init, action) {
     case UserActionTypes.GET_DETAIL_ERROR:
     case UserActionTypes.CREATE_ERROR:
     case UserActionTypes.UPDATE_ERROR:
-    case UserActionTypes.DELETE_ERROR:
+    case UserActionTypes.UPDATE_ROLE_ERROR:
       var { message } = action.payload
       toastError(message)
       return {
@@ -87,8 +87,8 @@ export default function (state = init, action) {
         ...state,
         processing: true,
       }
-    case UserActionTypes.DELETE_SUCCESS:
-      toastSuccess('Xóa thành công')
+    case UserActionTypes.UPDATE_ROLE_SUCCESS:
+      toastSuccess('Cập nhật role thành công')
       return {
         ...state,
         processing: false,

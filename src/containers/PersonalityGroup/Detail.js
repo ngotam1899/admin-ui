@@ -19,6 +19,8 @@ function Detail(props) {
   const [inputField, setInputField] = useState({})
   const dispatch = useDispatch()
 
+  useEffect(() => () => onClearDetail(), [])
+
   useEffect(() => {
     setInputField({
       name: detail && detail.name,

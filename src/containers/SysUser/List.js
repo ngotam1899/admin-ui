@@ -96,9 +96,11 @@ function List(props) {
                         <CTableDataCell>
                           {item.roleName === 'admin' ? (
                             <CBadge color="primary">{item.roleName.toUpperCase()}</CBadge>
-                          ) : (
+                          ) : (item.roleName === 'student' ? (
                             <CBadge color="info">{item.roleName.toUpperCase()}</CBadge>
-                          )}
+                          ) : (
+                            <CBadge color="success">{item.roleName.toUpperCase()}</CBadge>
+                          ))}
                         </CTableDataCell>
                         <CTableDataCell>
                           {item.isLocked ? (

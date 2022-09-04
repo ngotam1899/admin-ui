@@ -23,3 +23,8 @@ export const statisticMajor = (params = {}) => {
   }
   return axiosService.get(`${ENDPOINT}${url}/statistic${queryParams}`)
 }
+
+// https://release-mto.herokuapp.com/api/majors  METHOD = POST
+export const addMajor = (data) => {
+  return axiosService.post(`${ENDPOINT}${url}${url}`, data)
+}

@@ -1,7 +1,7 @@
 import { takeEvery, fork, all, call, put } from 'redux-saga/effects'
 import { get } from 'lodash'
 import UserActions, { UserActionTypes } from '../actions/user'
-import { getAllUser, getDetailUser, updateUser } from '../apis/user'
+import { getAllUser, getDetailUser, updateUser, updateRoleUser } from '../apis/user'
 import {
   getAllTest,
   getAllType,
@@ -53,9 +53,7 @@ function* handleCreate({ payload }) {
  */
 function* handleUpdate({ payload }) {
   try {
-    console.log(payload.data)
     const result = yield call(updateUser, payload.data)
-    const data = get(result, 'data', {})
     var detailResult = yield call(getAllUser, payload)
     yield put(UserActions.onUpdateSuccess(get(detailResult, 'data')))
     yield put(UserActions.onGetList(payload.params))
@@ -66,17 +64,16 @@ function* handleUpdate({ payload }) {
 
 /**
  *
- * delete
+ * update role
  */
-function* handleDelete({ id, params }) {
+function* handleUpdateRole({ payload }) {
   try {
-    const result = yield call(deleteTest, id)
-    const data = get(result, 'data', {})
-    if (data.code !== 200) throw data
-    yield put(UserActions.onDeleteSuccess(data))
-    yield put(UserActions.onGetList(params))
+    const result = yield call(updateRoleUser, payload.account_id, payload.role_id)
+    var detailResult = yield call(getAllUser, payload)
+    yield put(UserActions.onUpdateRoleSuccess(get(detailResult, 'data')))
+    yield put(UserActions.onGetList(payload.params))
   } catch (error) {
-    yield put(UserActions.onDeleteError(error))
+    yield put(UserActions.onUpdateRoleError(error))
   }
 }
 
@@ -96,8 +93,8 @@ export function* watchCreate() {
 export function* watchUpdate() {
   yield takeEvery(UserActionTypes.UPDATE, handleUpdate)
 }
-export function* watchDelete() {
-  yield takeEvery(UserActionTypes.DELETE, handleDelete)
+export function* watchUpdateRole() {
+  yield takeEvery(UserActionTypes.UPDATE_ROLE, handleUpdateRole)
 }
 
 export default function* rootSaga() {
@@ -106,6 +103,6 @@ export default function* rootSaga() {
     fork(watchGetDetail),
     fork(watchCreate),
     fork(watchUpdate),
-    fork(watchDelete),
+    fork(watchUpdateRole),
   ])
 }
