@@ -7,8 +7,9 @@ import major from './major'
 import personalityGroup from './personalityGroup'
 import question from './question'
 import test from './test'
-import state from "./state";
-import ui from "./ui";
+import state from './state'
+import subjectGroup from './subjectGroup'
+import ui from './ui'
 import user from './user'
 
 export default combineReducers({
@@ -20,6 +21,7 @@ export default combineReducers({
   question,
   test,
   state,
+  subjectGroup,
   ui,
   user,
 })

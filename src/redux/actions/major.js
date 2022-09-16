@@ -10,17 +10,27 @@ export const MajorActionTypes = {
   STATISTIC: 'STATISTIC',
   STATISTIC_SUCCESS: 'STATISTIC_SUCCESS',
   STATISTIC_ERROR: 'STATISTIC_ERROR',
+
+  CLEAR_DETAIL: 'CLEAR_DETAIL',
+  CLEAR_STATE: 'CLEAR_STATE',
 }
 
 Object.keys(MajorActionTypes).forEach((key) => {
   MajorActionTypes[key] = `MAJOR_${MajorActionTypes[key]}`
 })
 
+const onClearDetail = () => ({
+  type: MajorActionTypes.CLEAR_DETAIL,
+})
+
+const onClearState = () => ({
+  type: MajorActionTypes.CLEAR_STATE,
+})
+
 /**
  *
  * get list
  */
-
 
 const onGetList = (payload) => ({
   type: MajorActionTypes.GET_LIST,
@@ -41,18 +51,18 @@ const onGetListError = (error) => ({
  *
  * create
  */
-  const onCreate = (payload) => ({
-  type: CollegeActionTypes.CREATE,
+const onCreate = (payload) => ({
+  type: MajorActionTypes.CREATE,
   payload,
 })
 
 const onCreateSuccess = (detail) => ({
-  type: CollegeActionTypes.CREATE_SUCCESS,
+  type: MajorActionTypes.CREATE_SUCCESS,
   payload: detail,
 })
 
 const onCreateError = (error) => ({
-  type: CollegeActionTypes.CREATE_ERROR,
+  type: MajorActionTypes.CREATE_ERROR,
   payload: error,
 })
 
@@ -63,7 +73,7 @@ const onCreateError = (error) => ({
 
 const onStatistic = (payload) => ({
   type: MajorActionTypes.STATISTIC,
-  payload
+  payload,
 })
 
 const onStatisticSuccess = (payload) => ({
@@ -88,6 +98,9 @@ const MajorActions = {
   onCreate,
   onCreateSuccess,
   onCreateError,
+
+  onClearDetail,
+  onClearState,
 }
 
 export default MajorActions

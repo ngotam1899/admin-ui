@@ -10,6 +10,16 @@ const init = {
 
 export default function (state = init, action) {
   switch (action.type) {
+    case MajorActionTypes.CLEAR_DETAIL:
+      return {
+        ...state,
+        detail: null,
+        loadingDetail: true,
+      }
+    case MajorActionTypes.CLEAR_STATE:
+      return {
+        ...init,
+      }
     case MajorActionTypes.GET_LIST:
     case MajorActionTypes.CREATE:
       return {
