@@ -235,10 +235,11 @@ function Detail(props) {
                     <CListGroup>
                       {inputField.major &&
                         inputField.major.map((item, index) => {
+                          console.log(item);
                           return (
                             <CListGroupItem key={index}>
                               <div className="d-flex w-100 justify-content-between">
-                                <h5 className="mb-1">{item.name}</h5>
+                                <p className="mb-1">{item.name}</p>
                                 <CButton
                                   onClick={() => onRemoveMajor(item.id)}
                                   className="mr-1 mb-1 mb-xl-0 text-white"
@@ -247,62 +248,7 @@ function Detail(props) {
                                   Delete major
                                 </CButton>
                               </div>
-                              <CTable responsive="xxl">
-                                <CTableHead>
-                                  <CTableRow>
-                                    <CTableHeaderCell scope="col">ID</CTableHeaderCell>
-                                    <CTableHeaderCell scope="col">Name</CTableHeaderCell>
-                                    <CTableHeaderCell scope="col">Point</CTableHeaderCell>
-                                    <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
-                                  </CTableRow>
-                                </CTableHead>
-                                <CTableBody>
-                                  {item.subjectGroup.length > 0 &&
-                                    item.subjectGroup.map((sub) => {
-                                      return (
-                                        <CTableRow key={sub.id}>
-                                          <CTableHeaderCell scope="row">{sub.id}</CTableHeaderCell>
-                                          <CTableDataCell>{sub.name}</CTableDataCell>
-                                          <CTableDataCell>
-                                            {editting !== sub.id ? (
-                                              sub.sumPoint
-                                            ) : (
-                                              <CFormInput
-                                                type="number"
-                                                id="sumPoint"
-                                                name="sumPoint"
-                                                value={sumPoint}
-                                                onChange={(e) => setSumPoint(e.target.value)}
-                                              />
-                                            )}
-                                          </CTableDataCell>
-                                          <CTableDataCell>
-                                            {editting !== sub.id ? (
-                                              <CButton
-                                                onClick={() => {
-                                                  setEditting(sub.id)
-                                                  setSumPoint(sub.sumPoint)
-                                                }}
-                                                className="mr-1 mb-1 mb-xl-0"
-                                                color="warning"
-                                              >
-                                                Edit
-                                              </CButton>
-                                            ) : (
-                                              <CButton
-                                                onClick={() => onUpdatePoint(sub.id, item.id)}
-                                                className="mr-1 mb-1 mb-xl-0"
-                                                color="primary"
-                                              >
-                                                Save change
-                                              </CButton>
-                                            )}
-                                          </CTableDataCell>
-                                        </CTableRow>
-                                      )
-                                    })}
-                                </CTableBody>
-                              </CTable>
+
                             </CListGroupItem>
                           )
                         })}

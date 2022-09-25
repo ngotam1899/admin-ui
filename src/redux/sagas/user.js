@@ -1,14 +1,9 @@
 import { takeEvery, fork, all, call, put } from 'redux-saga/effects'
 import { get } from 'lodash'
 import UserActions, { UserActionTypes } from '../actions/user'
-import { getAllUser, getDetailUser, updateUser, updateRoleUser } from '../apis/user'
+import { getAllUser, getDetailUser, updateUser, updateRoleUser, createConnector } from '../apis/user'
 import {
-  getAllTest,
-  getAllType,
-  getDetailTest,
   addTest,
-  updateTest,
-  deleteTest,
 } from '../apis/test'
 
 function* handleGetList({ payload }) {
@@ -79,6 +74,21 @@ function* handleUpdateRole({ payload }) {
 
 /**
  *
+ * create connector
+ */
+ function* handleCreateConnector({ payload }) {
+  try {
+    const result = yield call(createConnector, payload.data)
+    const data = get(result, 'data', {})
+    yield put(UserActions.onCreateConnectorSuccess(data))
+    yield put(UserActions.onGetList())
+  } catch (error) {
+    yield put(UserActions.onCreateConnectorError(error))
+  }
+}
+
+/**
+ *
  */
 
 export function* watchGetList() {
@@ -96,6 +106,9 @@ export function* watchUpdate() {
 export function* watchUpdateRole() {
   yield takeEvery(UserActionTypes.UPDATE_ROLE, handleUpdateRole)
 }
+export function* watchCreateConnector() {
+  yield takeEvery(UserActionTypes.CREATE_CONNECTOR, handleCreateConnector)
+}
 
 export default function* rootSaga() {
   yield all([
@@ -104,5 +117,6 @@ export default function* rootSaga() {
     fork(watchCreate),
     fork(watchUpdate),
     fork(watchUpdateRole),
+    fork(watchCreateConnector)
   ])
 }

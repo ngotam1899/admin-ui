@@ -18,12 +18,16 @@ import {
   CRow,
 } from '@coreui/react'
 import UserActions from '../../redux/actions/user'
+import CollegeActions from '../../redux/actions/college'
 import Detail from './Detail'
+import Connector from './Connector'
 
 function List(props) {
   const [large, setLarge] = useState(false)
+  const [_large, set_Large] = useState(false)
   const location = useLocation()
   const dispatch = useDispatch()
+  const colleges = useSelector((state) => state.college.list || [])
   const user = useSelector((state) => state.user.list || [])
   const detail = useSelector((state) => state.user.detail || {})
 
@@ -33,6 +37,12 @@ function List(props) {
 
   const loadData = () => {
     dispatch(UserActions.onGetList())
+    dispatch(
+      CollegeActions.onGetList({
+        PageNumber: 1,
+        PageSize: 200,
+      }),
+    )
   }
 
   const onUpdate = (large, id) => {
@@ -51,8 +61,13 @@ function List(props) {
     )
   }
 
+  const onAddConnector = () => {
+    set_Large(true);
+  }
+
   const onClose = (large) => {
     setLarge(large)
+    set_Large(large)
     dispatch(UserActions.onClearDetail())
   }
 
@@ -67,6 +82,12 @@ function List(props) {
                 <p className="float-left my-2 mr-3 font-italic">
                   Có tất cả {user.length} kết quả tìm kiếm
                 </p>
+                <CButton
+                  onClick={() => onAddConnector()}
+                  color="success"
+                >
+                  Add a Connector
+                </CButton>
               </div>
             </div>
           </CCardHeader>
@@ -94,9 +115,9 @@ function List(props) {
                         </CTableDataCell>
                         <CTableDataCell>{item.email}</CTableDataCell>
                         <CTableDataCell>
-                          {item.roleName === 'admin' ? (
+                          {item.roleName === 'Admin' ? (
                             <CBadge color="primary">{item.roleName.toUpperCase()}</CBadge>
-                          ) : (item.roleName === 'student' ? (
+                          ) : (item.roleName === 'Student' ? (
                             <CBadge color="info">{item.roleName.toUpperCase()}</CBadge>
                           ) : (
                             <CBadge color="success">{item.roleName.toUpperCase()}</CBadge>
@@ -141,6 +162,9 @@ function List(props) {
             {!detail && large && (
               <Detail large={large} onClose={onClose} onClearDetail={UserActions.onClearDetail} />
             )}
+            {_large && colleges && (
+              <Connector large={_large} onClose={onClose} colleges={colleges}/>
+              )}
           </CCardBody>
         </CCard>
       </CCol>

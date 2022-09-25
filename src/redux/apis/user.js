@@ -34,3 +34,8 @@ export const updateUser = (data) => {
 export const updateRoleUser = (account_id, role_id) => {
   return axiosService.put(`${ENDPOINT}${url}/${account_id}/role/${role_id}`)
 }
+
+// https://release-mto.herokuapp.com/api/sys_users/Connector  METHOD = POST
+export const createConnector = (data) => {
+  return axiosService.post(`${ENDPOINT}${url}/Connector`, data)
+}

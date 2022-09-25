@@ -19,6 +19,10 @@ export const UserActionTypes = {
   UPDATE_ROLE_SUCCESS: 'UPDATE_ROLE_SUCCESS',
   UPDATE_ROLE_ERROR: 'UPDATE_ROLE_ERROR',
 
+  CREATE_CONNECTOR: 'CREATE_CONNECTOR',
+  CREATE_CONNECTOR_SUCCESS: 'CREATE_CONNECTOR_SUCCESS',
+  CREATE_CONNECTOR_ERROR: 'CREATE_CONNECTOR_ERROR',
+
   CLEAR_DETAIL: 'CLEAR_DETAIL',
   CLEAR_STATE: 'CLEAR_STATE',
 }
@@ -116,6 +120,25 @@ const onUpdateRoleError = (error) => ({
   payload: error,
 })
 
+/**
+ *
+ * create connector
+ */
+ const onCreateConnector = (payload) => ({
+  type: UserActionTypes.CREATE_CONNECTOR,
+  payload,
+})
+
+const onCreateConnectorSuccess = (detail) => ({
+  type: UserActionTypes.CREATE_CONNECTOR_SUCCESS,
+  payload: detail,
+})
+
+const onCreateConnectorError = (error) => ({
+  type: UserActionTypes.CREATE_CONNECTOR_ERROR,
+  payload: error,
+})
+
 const UserActions = {
   onGetList,
   onGetListSuccess,
@@ -139,6 +162,10 @@ const UserActions = {
   onUpdateRole,
   onUpdateRoleSuccess,
   onUpdateRoleError,
+
+  onCreateConnector,
+  onCreateConnectorSuccess,
+  onCreateConnectorError,
 }
 
 export default UserActions

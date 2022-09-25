@@ -59,6 +59,7 @@ export default function (state = init, action) {
     case UserActionTypes.CREATE:
     case UserActionTypes.UPDATE:
     case UserActionTypes.UPDATE_ROLE:
+    case UserActionTypes.CREATE_CONNECTOR:
       return {
         ...state,
         processing: true,
@@ -69,6 +70,7 @@ export default function (state = init, action) {
     case UserActionTypes.CREATE_ERROR:
     case UserActionTypes.UPDATE_ERROR:
     case UserActionTypes.UPDATE_ROLE_ERROR:
+    case UserActionTypes.CREATE_CONNECTOR_ERROR:
       var { message } = action.payload
       toastError(message)
       return {
@@ -82,6 +84,7 @@ export default function (state = init, action) {
         processing: true,
       }
     case UserActionTypes.CREATE_SUCCESS:
+    case UserActionTypes.CREATE_CONNECTOR_SUCCESS:
       toastSuccess('Tạo mới thành công')
       return {
         ...state,

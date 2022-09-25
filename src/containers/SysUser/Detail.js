@@ -151,9 +151,9 @@ function Detail(props) {
                       onChange={inputsHandler}
                     >
                       <option>Select the role</option>
-                      <option value="student">Student</option>
-                      <option value="admin">Admin</option>
-                      <option value="connector">Connector</option>
+                      <option value="Student">Student</option>
+                      <option value="Admin">Admin</option>
+                      <option value="Connector">Connector</option>
                     </CFormSelect>
                   </div>
                   <div className="mb-2">
