@@ -17,6 +17,7 @@ import {
   CRow,
 } from '@coreui/react'
 import MajorActions from '../../redux/actions/major'
+import SGActions from '../../redux/actions/subjectGroup'
 import Detail from './Detail'
 import Pagination from 'react-js-pagination'
 import getFilterParams from '../../util/getFilterParams'
@@ -33,7 +34,8 @@ function List(props) {
   const dispatch = useDispatch()
   const major = useSelector((state) => state.major.list || [])
   const total = useSelector((state) => state.major.total || [])
-  const detail = useSelector((state) => state.major.detail || {})
+  const detail = useSelector((state) => state.major.detail || null)
+  const sgs = useSelector((state) => state.subjectGroup.list || [])
 
   useEffect(() => {
     loadData()
@@ -47,6 +49,12 @@ function List(props) {
     }
     setFilter(params)
     dispatch(MajorActions.onGetList(params))
+    dispatch(
+      SGActions.onGetList({
+        PageNumber: 1,
+        PageSize: 200,
+      }),
+    )
   }
   const handlePageChange = (PageNumber) => {
     handleUpdateFilter({ PageNumber })
@@ -64,7 +72,7 @@ function List(props) {
 
   const onClose = (large) => {
     setLarge(large)
-    dispatch(UserActions.onClearDetail())
+    dispatch(MajorActions.onClearDetail())
   }
 
   return (
@@ -78,6 +86,9 @@ function List(props) {
                 <p className="float-left my-2 mr-3 font-italic">
                   Có tất cả {total} kết quả tìm kiếm
                 </p>
+                <CButton onClick={() => setLarge(!large)} color="success">
+                  Add a Major
+                </CButton>
               </div>
             </div>
           </CCardHeader>
@@ -119,11 +130,17 @@ function List(props) {
                 large={large}
                 detail={detail}
                 onClose={onClose}
-                onClearDetail={UserActions.onClearDetail}
+                sgs={sgs}
+                onClearDetail={MajorActions.onClearDetail}
               />
             )}
             {!detail && large && (
-              <Detail large={large} onClose={onClose} onClearDetail={UserActions.onClearDetail} />
+              <Detail
+                large={large}
+                onClose={onClose}
+                sgs={sgs}
+                onClearDetail={MajorActions.onClearDetail}
+              />
             )}
           </CCardBody>
           <CCardFooter>

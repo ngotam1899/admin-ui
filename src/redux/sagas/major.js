@@ -1,11 +1,7 @@
 import { takeEvery, fork, all, call, put } from 'redux-saga/effects'
 import { get } from 'lodash'
 import MajorActions, { MajorActionTypes } from '../actions/major'
-import {
-  getAllMajor,
-  statisticMajor,
-  addMajor
-} from '../apis/major'
+import { getAllMajor, statisticMajor, addMajor } from '../apis/major'
 
 function* handleGetList({ payload }) {
   try {
@@ -21,8 +17,9 @@ function* handleGetList({ payload }) {
  *
  * create
  */
- function* handleCreate({ payload }) {
+function* handleCreate({ payload }) {
   try {
+    console.log(payload)
     const result = yield call(addMajor, payload.data)
     const data = get(result, 'data', {})
     yield put(MajorActions.onCreateSuccess(data))

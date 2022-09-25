@@ -26,5 +26,6 @@ export const statisticMajor = (params = {}) => {
 
 // https://release-mto.herokuapp.com/api/majors  METHOD = POST
 export const addMajor = (data) => {
-  return axiosService.post(`${ENDPOINT}${url}${url}`, data)
+  console.log(data)
+  return axiosService.post(`${ENDPOINT}${url}`, data)
 }

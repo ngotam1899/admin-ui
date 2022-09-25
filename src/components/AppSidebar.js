@@ -5,7 +5,7 @@ import { CSidebar, CSidebarBrand, CSidebarNav, CSidebarToggler, CImage } from '@
 import CIcon from '@coreui/icons-react'
 
 import { AppSidebarNav } from './AppSidebarNav'
-import logo from 'src/assets/brand/logo.jpg';
+import logo from 'src/assets/brand/logo.jpg'
 
 import SimpleBar from 'simplebar-react'
 import 'simplebar/dist/simplebar.min.css'
