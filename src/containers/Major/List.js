@@ -98,7 +98,6 @@ function List(props) {
                 <CTableRow>
                   <CTableHeaderCell scope="col">Major ID</CTableHeaderCell>
                   <CTableHeaderCell scope="col">Name</CTableHeaderCell>
-                  <CTableHeaderCell scope="col">Actions</CTableHeaderCell>
                 </CTableRow>
               </CTableHead>
               <CTableBody>
@@ -109,16 +108,6 @@ function List(props) {
                         <CTableHeaderCell scope="row">{item.majorId}</CTableHeaderCell>
                         <CTableDataCell>
                           <p>{item.majorName}</p>
-                        </CTableDataCell>
-                        <CTableDataCell>
-                          <CButton
-                            onClick={() => onUpdate(!large, item.majorId)}
-                            className="mr-1 mb-1 mb-xl-0"
-                            color="warning"
-                            disabled
-                          >
-                            Update
-                          </CButton>
                         </CTableDataCell>
                       </CTableRow>
                     )
