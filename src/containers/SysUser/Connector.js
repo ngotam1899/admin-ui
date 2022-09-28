@@ -51,7 +51,6 @@ function Connector(props) {
     if(inputField.password !== inputField.rePassword) {
       toastError("Mật khẩu không trùng khớp")
     } else {
-      console.log(inputField)
       dispatch(UserActions.onCreateConnector({
         data: {
           fullName: inputField.fullName,

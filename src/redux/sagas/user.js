@@ -62,8 +62,10 @@ function* handleUpdate({ payload }) {
  * update role
  */
 function* handleUpdateRole({ payload }) {
+  console.log(payload)
   try {
-    const result = yield call(updateRoleUser, payload.account_id, payload.role_id)
+    const result = yield call(updateRoleUser, payload.account_id, payload.role_id, payload.college_id)
+    
     var detailResult = yield call(getAllUser, payload)
     yield put(UserActions.onUpdateRoleSuccess(get(detailResult, 'data')))
     yield put(UserActions.onGetList(payload.params))

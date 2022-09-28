@@ -31,8 +31,8 @@ export const updateUser = (data) => {
 }
 
 // https://release-mto.herokuapp.com/api/sys_users/:account_id/role/:role_id  METHOD = PUT
-export const updateRoleUser = (account_id, role_id) => {
-  return axiosService.put(`${ENDPOINT}${url}/${account_id}/role/${role_id}`)
+export const updateRoleUser = (account_id, role_id, college_id) => {
+  return axiosService.put(`${ENDPOINT}${url}/${account_id}/role/${role_id}/${college_id}`)
 }
 
 // https://release-mto.herokuapp.com/api/sys_users/Connector  METHOD = POST

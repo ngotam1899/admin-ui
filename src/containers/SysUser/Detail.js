@@ -12,16 +12,24 @@ import {
   CFormInput,
   CFormSelect,
   CFormSwitch,
+  CListGroup,
+  CListGroupItem
 } from '@coreui/react'
 import UserActions from '../../redux/actions/user'
 import { useDispatch, useSelector } from 'react-redux'
 
 function Detail(props) {
-  const { large, detail, onClose, onClearDetail } = props
+  const { large, detail, onClose, onClearDetail, colleges } = props
+  const [searchKeywork, setSearchKeywork] = useState('')
+  const [searchResult, setSearchResult] = useState([])
+  const [college, setCollege] = useState(null)
   const [inputField, setInputField] = useState({})
   const dispatch = useDispatch()
 
   useEffect(() => () => onClearDetail(), [])
+  useEffect(() => {
+    setSearchResult(colleges.filter((item) => item.collegeName.toLowerCase().indexOf(searchKeywork.toLowerCase()) > -1).slice(0, 5))
+  }, [searchKeywork])
 
   useEffect(() => {
     setInputField({
@@ -45,17 +53,27 @@ function Detail(props) {
   const inputsHandler = (e) => {
     setInputField({ ...inputField, [e.target.name]: e.target.value })
   }
+  const inputsKeyword = (e) => {
+    setSearchKeywork(e.target.value)
+  }
+  const onAddCollege = (item) => {
+    setSearchKeywork('')
+    setCollege(item);
+  }
+  const onRemoveCollege = () => {
+    setCollege(null)
+  }
 
   const onSubmit = () => {
     let role_id = 0;
     switch (inputField.roleName) {
-      case 'student':
+      case 'Student':
         role_id = 1;
         break;
-      case 'admin':
+      case 'Admin':
         role_id = 2;
         break;
-      case 'connector':
+      case 'Connector':
         role_id = 3;
         break;
       default:
@@ -64,7 +82,8 @@ function Detail(props) {
     }
     dispatch(UserActions.onUpdateRole({
       account_id: detail.userId,
-      role_id
+      role_id,
+      college_id : college.collegeId
     }))
   }
 
@@ -167,7 +186,7 @@ function Detail(props) {
                     />
                   </div>
                   <div className="row">
-                    <div className="col-6">
+                    {inputField.roleName !== 'Connector' ? <><div className="col-6">
                       <div className="mb-2">
                         <CFormLabel htmlFor="grade">Grade</CFormLabel>
                         <CFormInput
@@ -214,7 +233,41 @@ function Detail(props) {
                           disabled
                         />
                       </div>
+                    </div></> : <div className="col-12">
+                      <CFormLabel htmlFor="searchKeywork">Search for college</CFormLabel>
+                  <div className="search-input">
+                      <CFormInput
+                        type="text"
+                        id="searchKeywork"
+                        name="searchKeywork"
+                        className="mb-2"
+                        value={searchKeywork || ''}
+                        onChange={inputsKeyword}
+                      />
+
+                        <CListGroup>
+                          {searchKeywork.length > 0 && searchResult.length > 0 && searchResult.map((item) => <CListGroupItem key={item.collegeId}>{item.collegeName}<CButton
+                            onClick={() => onAddCollege(item)}
+                            className="mr-1 mb-1 mb-xl-0 float-right"
+                            color="success"
+                          >
+                            Add
+                          </CButton></CListGroupItem>)}
+
+                      </CListGroup>
+                      {college && <div className="mb-2 rounded border p-2">
+                        <CFormLabel>{college.collegeName}</CFormLabel>
+                        <CButton
+                            onClick={() => onRemoveCollege()}
+                            className="mr-1 mb-1 mb-xl-0 float-right"
+                            color="danger"
+                          >
+                            Remove
+                          </CButton>
+                      </div>}
+
                     </div>
+                    </div>}
                   </div>
                 </div>
               </div>

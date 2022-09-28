@@ -156,11 +156,11 @@ function List(props) {
                 large={large}
                 detail={detail}
                 onClose={onClose}
-                onClearDetail={UserActions.onClearDetail}
+                onClearDetail={UserActions.onClearDetail} colleges={colleges}
               />
             )}
             {!detail && large && (
-              <Detail large={large} onClose={onClose} onClearDetail={UserActions.onClearDetail} />
+              <Detail large={large} onClose={onClose} onClearDetail={UserActions.onClearDetail} colleges={colleges}/>
             )}
             {_large && colleges && (
               <Connector large={_large} onClose={onClose} colleges={colleges}/>
