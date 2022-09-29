@@ -2,6 +2,7 @@ import { all } from 'redux-saga/effects'
 
 import answer from './answer'
 import auth from './auth'
+import blog from './blog'
 import college from './college'
 import major from './major'
 import personalityGroup from './personalityGroup'
@@ -14,6 +15,7 @@ export default function* rootSaga(getState) {
   yield all([
     answer(),
     auth(),
+    blog(),
     college(),
     major(),
     personalityGroup(),

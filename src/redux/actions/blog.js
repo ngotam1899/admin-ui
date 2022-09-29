@@ -24,7 +24,7 @@ export const BlogActionTypes = {
 }
 
 Object.keys(BlogActionTypes).forEach((key) => {
-  BlogActionTypes[key] = `QUESTION_${BlogActionTypes[key]}`
+  BlogActionTypes[key] = `BLOG_${BlogActionTypes[key]}`
 })
 
 const onClearDetail = () => ({

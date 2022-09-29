@@ -7,7 +7,8 @@ import {
   cilBraille,
   cilCommentBubble,
   cilUser,
-  cilBasketball
+  cilBasketball,
+  cilAddressBook,
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
@@ -60,6 +61,12 @@ const _nav = [
     name: 'Major',
     to: '/manage/major',
     icon: <CIcon icon={cilBasketball} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Blog',
+    to: '/manage/blog',
+    icon: <CIcon icon={cilAddressBook} customClassName="nav-icon" />,
   },
 ]
 
